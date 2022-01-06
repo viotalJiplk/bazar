@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+	<head>
+		<meta charset="utf-8">
+		<script src="template.js"></script>
+		<script src="js/records.js" defer></script>
+		<script src="js/search.js" defer></script>
+		<script src="js/ajax.js"></script>
+	</head>
+	<body>
+			<div class="wrapper">
+				<div class="search">
+					<div class="searchbox">
+						Kategorie:<br>
+						<select required name="cat" id="id_cat"/>
+    						<option value="">Vše</option>
+	    					<option value="tech">Technika</option>
+    						<option value="toy">Hračky</option>
+    						<option value="art">Umění</option>
+							<option value="oth">Jiné</option>
+						</select>
+					</div>
+					<br>Cena od:<br>
+					<input type="number" min="0" max="4294967295" name="price_from" id="id_price_from"/>Kč
+					<br>Cena do:<br>
+					<input type="number" min="0" max="4294967295" name="price_to" id="id_price_to"/>Kč
+					<br>Max. stáří:<br>
+					<input type="date" min="0" name="pub_date" id="id_pub_date"/> dní
+					<br><button onclick="search()">vyfiltruj</button>
+				</div>
+				<div class="content">
+					<h1>Bazar - hledej</h1>
+					<div id="content"></div>
+				</div>
+			</div>
+		<style>
+			h1{
+				text-align: center;
+			}
+			.search{
+				grid-area: menu;
+				background-color: rgb(77, 188, 252);
+				padding: 1rem;
+			}
+			.content{
+				grid-area: content;
+				padding: 1rem;
+			}
+
+			.wrapper{
+				display: grid;
+				grid-template-areas:
+				'menu content content content'
+			}
+			img{
+				height: 9ch;
+				width: 16ch;
+			}
+			.record{
+				width: 98%;
+				border-style: solid;
+				padding: 1rem;
+			}
+		</style>
+	</body>
+</html>

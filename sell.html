@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+	<head>
+		<meta charset="utf-8"/>
+		<script src="template.js"></script>
+		<script src="js/insert.js" defer></script>
+		<link rel="stylesheet" href="include/sell.css"/>
+	</head>
+	<body>
+		<div id="content">
+			<h1>Bazar - prodej</h1>
+				Jméno:<br>
+				<input type="text" name="name" id="id_name"/>
+				<br>* Email:<br>
+				<input required type="email" name="email" id="id_email"/>
+				<br>* Heslo:<br>
+				<input required type="password" name="passwd" id="id_passwd"/>
+				<br>* Kategorie:<br>
+				<select required name="cat" id="id_cat">
+						<option value="tech">Technika</option>
+						<option value="toy">Hračky</option>
+						<option value="art">Umění</option>
+						<option value="oth">Jiné</option>
+				</select>
+				<br>Popis:<br>
+				<textarea required cols="30" rows="5" name="descr" id="id_descr"></textarea>
+
+				<br>* Obrázek:<br>
+				<input required size="10" type="file" name="pic" id="id_pic"/><button onclick="upload_photo()">nahrát fotku</button>
+				<br>Cena:<br>
+				<input required type="number" min="0"  name="price" id="id_price"/>
+				<button onclick="insert()">Zveřejnit</button>
+				<div id="log"></div>
+		</div>
+	</body>
+</html>
+
