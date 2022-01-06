@@ -1,7 +1,7 @@
 <?php
 
 include(dirname(__FILE__)."/classdef.php");     //the location will be found even when this file (dbio.php) was included
-
+include(dirname(__FILE__)."/secrets.php");
 
 if(!function_exists("dbio")){
     /**
@@ -13,11 +13,6 @@ if(!function_exists("dbio")){
      */
     function dbio(string $sql, array $param){
         try{
-            $servername = "localhost";
-            $dbname = "bazar";
-
-            $username = "bazos";
-            $password = "test_bazos_123";
 
             new Exception("DB: PDOexcepion");
             $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
