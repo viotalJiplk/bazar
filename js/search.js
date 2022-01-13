@@ -37,7 +37,7 @@ function search(){
     }
     json = JSON.stringify(json);
     console.log(json);
-    ajax("search.php", "POST", callback_search, json)
+    ajax(window.api.endpoints.search, "POST", callback_search, json)
 }
 
 /**

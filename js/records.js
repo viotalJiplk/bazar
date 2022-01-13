@@ -28,14 +28,15 @@ for the JavaScript code in this page.
 
 function add_records(records){
     const cnt = document.getElementById("content");
-    records.forEach(element => {
-        if(typeof(element.pic) == 'undefined' || element.pic == null){
-            element.pic = "";
-        }else{
-            element.pic = "pictures/" + element.pic;
-        }
-        let text = "<div id=\""+ element.id +"\" class=\"record\"><img src=\"" + element.pic + "\"></img><p>Kontakt: <a href=\"mailto://" + element.email + "\">"+ element.email +"</a></p><p>Kategorie: " + element.cat + "</p><p>Popis: </p><p>" + element.descr + "</p><p>Cena: " + element.price + " Kč</p></div>";
-        cnt.innerHTML = cnt.innerHTML + text;
-    });
-
+    if(records.forEach != undefined){
+        records.forEach(element => {
+            if(typeof(element.pic) == 'undefined' || element.pic == null){
+                element.pic = "";
+            }else{
+                element.pic = "pictures/" + element.pic;
+            }
+            let text = "<div id=\""+ element.id +"\" class=\"record\"><img src=\"" + element.pic + "\"></img><p>Kontakt: <a href=\"mailto://" + element.email + "\">"+ element.email +"</a></p><p>Kategorie: " + element.cat + "</p><p>Popis: </p><p>" + element.descr + "</p><p>Cena: " + element.price + " Kč</p></div>";
+            cnt.innerHTML = cnt.innerHTML + text;
+        });
+    }
 }

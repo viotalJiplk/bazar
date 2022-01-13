@@ -27,7 +27,7 @@ for the JavaScript code in this page.
  */
 
 //include all required scripts
-include(["js/ajax.js"]);
+include(["js/ajax.js", "js/init.js"]);
 add_css(["include/nav.css", "include/content.css", "include/footer.css"]);
 
 /**

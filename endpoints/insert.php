@@ -1,7 +1,7 @@
 <?php
-    include("php/dbio.php");
-    include("php/classdef.php");
-    include("php/helper.php");
+    include_once("php/dbio.php");
+    include_once("php/classdef.php");
+    include_once("php/helper.php");
     session_start();
 
     header("Content-type: application/json");

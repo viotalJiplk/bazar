@@ -30,7 +30,7 @@ for the JavaScript code in this page.
  * @throws httpStatusCode on error
  */
 
-function ajax(url, method, callback, payload){
+function ajax(url, method, callback, payload = ""){
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState == 4) {

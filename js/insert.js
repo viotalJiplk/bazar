@@ -34,7 +34,7 @@ function insert(){
         "price": Number(document.getElementById("id_price").value),
     }
     json = JSON.stringify(json);
-    ajax("save.php", "POST", callback_insert, json)
+    ajax(window.api.endpoints.insert, "POST", callback_insert, json)
 }
 
 /**
@@ -83,5 +83,5 @@ function create_status_div(status, statu_code){
  */
 function upload_photo(){
     const pic = document.getElementById("id_pic").files[0];
-    ajax("/prog/bazos/pictures/put.php", "PUT", callback_insert, pic);    
+    ajax(window.api.endpoints.upload_picture, "PUT", callback_insert, pic);    
 }
