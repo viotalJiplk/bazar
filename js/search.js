@@ -21,19 +21,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
+document.getElementById("submitbutton").addEventListener("click", function(){search()});
+lastoffset = 0;
+limit = 50;
 /**
  * function to do request to server for records
  */
-function search(){
+function search(offset = 0){
     const cat = document.getElementById("id_cat").value;
     const price_from = document.getElementById("id_price_from").value;
     const price_to = document.getElementById("id_price_to").value;
     const from_date = document.getElementById("id_pub_date").value;
+    limit = Number(document.getElementById("limit").value);
     let json = {
         "cat": cat,
         "price_from": price_from,
         "price_to": price_to,
-        "from_date": from_date
+        "from_date": from_date,
+        "limit": limit,
+        "offset": offset
     }
     json = JSON.stringify(json);
     console.log(json);
@@ -46,9 +52,46 @@ function search(){
  */
 
 function callback_search(resText){
-    const json = JSON.parse(resText);
-    document.getElementById("content").innerHTML = "";
-    add_records(json);
+    if(resText != ""){
+        res = JSON.parse(resText);
+        if(res.estate == 0 & res.result == "ok"){
+            const json = JSON.parse(resText);
+            document.getElementById("records").innerHTML = "";
+            add_records(json.response);
+            document.getElementById("page_navigation").innerHTML ="";
+            if(json.request.offset >0){
+                a_previouspage = document.createElement("a");
+                a_previouspage.addEventListener("click", function(){
+                    lastoffset = lastoffset - limit;
+                    if(lastoffset < 0){
+                        lastoffset = 0;
+                    }
+                    console.log(lastoffset);
+                    search(lastoffset);
+                });
+                a_previouspage.innerHTML ="<- předchozí stránka";
+                a_previouspage.setAttribute("href", "#content");
+                document.getElementById("page_navigation").appendChild(a_previouspage);
+            }
+            if(json.request.offset >0 & json.request.limit == json.response.length){
+                p = document.createElement("p");
+                p.innerHTML = "|";
+                document.getElementById("page_navigation").appendChild(p);
+            }
+            if(json.request.limit == json.response.length){
+                a_nextpage = document.createElement("a");
+                a_nextpage.addEventListener("click", function(){lastoffset += json.request.limit;search(lastoffset)});
+                a_nextpage.innerHTML ="další stránka ->";
+                a_nextpage.setAttribute("href", "#content");
+                document.getElementById("page_navigation").appendChild(a_nextpage);
+            }
+        }else{
+            console.error("unknown error");
+            console.error(res);
+        }
+    }else{
+        console.error(resText);
+    }
 }
 
 search();

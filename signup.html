@@ -4,22 +4,22 @@
         <meta charset="utf-8">
         <!--no inline scripts-->
         <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
-        <title>Bazar - přihlášení</title>
-        <link rel="stylesheet" href="">
-        <script src="template.js"></script>
-        <script src="js/login.js" defer></script>
+        <title>Bazar - registrace</title>
         <link rel="stylesheet" href="css/account.css">
+        <script src="template.js"></script>
+        <script src="js/signup.js" defer></script>
     </head>
     <body>
         <div id="content">
             <div id="logindiv">
-                <h1>Bazar - přihlášení</h1>
+                <h1>Bazar - registrace</h1>
                 <p>E-mail</p>
                 <input type="text" id="email" name="E-mail" required="required">
+                <p>Uživatelské jméno</p>
+                <input type="username" id="username" name="username" required="required">
                 <p>Heslo</p>
                 <input type="password" id="password" name="password" required="required"><br>
-                <p>Ještě nemáte účet? Zaregistrujte se <a href="signup.html">zde</a>.</p>
-                <button type="submit" id="submitbutton" class="btn-primary">Log in</button>
+                <button type="submit" id="submitbutton" class="btn-primary">Sign up</button>
             </div>
             <div id="loginerror">
                 <p></p>

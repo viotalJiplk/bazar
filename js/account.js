@@ -21,24 +21,39 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
-testapi = localStorage.getItem("api");
-if(testapi == "" | testapi == null){
-    ajax("endpoints/","GET",callbackfunc);
-}else{
-    window.api = JSON.parse(testapi);
-}
+document.getElementById("logoutbutton").addEventListener("click", logout);
 
-window.addEventListener("navloaded", on_ajaxload);
-
-function on_ajaxload(){
-    account = localStorage.getItem("account");
-    if(account != "" & account != null){
-        document.getElementById("login").innerText = "Účet";
-        document.getElementById("login").setAttribute("href", "account.html");
+function logoutcallback(resText){
+    if(resText != ""){
+        res = JSON.parse(resText);
+        if(res.estate == 0 & res.result == "ok"){
+            localStorage.removeItem("account");
+            location.href = "index.html";
+        }else{
+            console.error("unknown error");
+            console.error(res);
+        }
+    }else{
+        console.error(resText);
     }
 }
 
-function callbackfunc(resText){
-    localStorage.setItem("api", resText);
-    window.api = JSON.parse(resText);
+function logouterrorcallback(status, resText){
+    if(resText != ""){
+        res = JSON.parse(resText);
+        console.error(status, res);
+    }else{
+        console.error(resText);
+    }
+}
+
+/**
+ * function to try loging in
+ * @param {string} email 
+ * @param {string} password
+ * @param {Function} callback
+ * @param {Function} callbackerror
+ */
+function logout(){
+    ajax(window.api.endpoints.logout, "POST", logoutcallback, "", logouterrorcallback);    
 }

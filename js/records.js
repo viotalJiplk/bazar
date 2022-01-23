@@ -27,7 +27,7 @@ for the JavaScript code in this page.
  */
 
 function add_records(records){
-    const cnt = document.getElementById("content");
+    const cnt = document.getElementById("records");
     if(records.forEach != undefined){
         records.forEach(element => {
             if(typeof(element.pic) == 'undefined' || element.pic == null){

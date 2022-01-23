@@ -1,0 +1,14 @@
+#loginerror{
+    color: darkred;
+    background-color: rgb(253, 115, 115);
+    visibility: hidden;
+    padding: 0.15rem;
+    border-radius: 2rem;
+    width: fit-content;
+}
+#loginerror > p{
+    padding-left: 1rem;
+}
+#logindiv > p{
+    margin: 0px;
+}

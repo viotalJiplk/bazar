@@ -1,0 +1,41 @@
+.search > label{
+    margin: 0px;
+    display: block;
+}
+h1{
+    text-align: center;
+}
+.search{
+    grid-area: menu;
+    background-color: rgb(77, 188, 252);
+    padding: 1rem;
+}
+.content{
+    grid-area: content;
+    padding: 1rem;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-areas:
+    'menu content content content'
+}
+img{
+    height: 9ch;
+    width: 16ch;
+}
+.record{
+    width: 98%;
+    border-style: solid;
+    padding: 1rem;
+}
+#page_navigation a{
+    text-decoration: none;
+    color: blue;
+}
+#page_navigation a:visited {
+    color: blue;
+}
+#page_navigation p {
+    display: inline;
+}

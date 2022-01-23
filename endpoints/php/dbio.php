@@ -15,8 +15,6 @@ $dirname = dirname(__FILE__);
 function dbio(string $sql, array $param){
     global $servername, $dbname, $username, $password;
     try{
-
-        new Exception("DB: PDOexcepion");
         $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
             //adding parmeters and testing return value
@@ -41,12 +39,16 @@ function dbio(string $sql, array $param){
         }
         $conn = null;
         return $result;
-    }catch(PDOException $e) {                                               //zpracování výjimky databáze
-        throw new Exception("DB: PDOexcepion");
+    }catch(PDOException $e) {           
+        $ecode = $stmt->errorCode();                                    //zpracování výjimky databáze
+        throw new dbIOException("DB: PDOexcepion", $ecode);
+        $conn = null;
     }catch(AttrException $e){                                               //zpracování výjimky atributů spojení s databází 
-        throw new Exception("DB: exception when setting attribute");
+        throw new dbIOException("DB: exception when setting attribute");
+        $conn = null;
     }catch(Exception $e){
-        throw new Exception("DB: general excepion");
+        throw new dbIOException("DB: general excepion");
+        $conn = null;
     }
 }
 ?>

@@ -3,8 +3,8 @@
 
 if(!class_exists("Exceptionlong")){
     class Exceptionlong extends Exception{
-        function __construct(string $e=""){
-            parent::__construct($e);
+        function __construct(string $e="", int $ecode = 0){
+            parent::__construct($e, $ecode);
         }
     }
 }

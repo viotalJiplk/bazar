@@ -4,6 +4,8 @@
         "search": "endpoints/search.php",
         "insert": "endpoints/insert.php",
         "upload_picture": "endpoints/pictureupload.php",
-        "login": "endpoints/login.php"
+        "login": "endpoints/login.php",
+        "signup": "endpoints/signup.php",
+        "logout": "endpoints/logout.php"
     }
 }

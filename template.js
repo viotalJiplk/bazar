@@ -21,10 +21,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
-/**
- * Vyrobi navigacni menu v podobe viz nize a vlozi ho za body
- * 
- */
+const ajaxloaded = new Event('ajaxloaded');
+const navloaded = new Event('navloaded');
 
 //include all required scripts
 include(["js/ajax.js", "js/init.js"]);
@@ -57,18 +55,25 @@ function add_css(css){
   });
 }
 
+function set_active(nav){
+  let path = window.location.pathname;
+  let page = path.split("/").pop();
+  if(page == ""){
+    page = "index.html";
+  }
+  let active = nav.querySelector('[href="' + page + '"]');
+  if(active != null){
+    active.setAttribute("class", "active");
+  }
+}
+
 function build_nav(){
   ajax("include/nav.html", "GET", function(res){
       const nav = document.createElement("nav");
       nav.innerHTML = res;
-      let path = window.location.pathname;
-      let page = path.split("/").pop();
-      if(page == ""){
-        page = "index.html";
-      }
-      let active = nav.querySelector('[href="' + page + '"]');
-      active.setAttribute("class", "active");
+      set_active(nav);
       document.body.insertBefore(nav, document.body.firstElementChild);
+      window.dispatchEvent(navloaded);
     },
     "");
 }

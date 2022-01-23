@@ -13,7 +13,7 @@
         }else{
             $param = array();
 
-            $sql = "SELECT name, email, cat, descr, pic, price, date FROM zaznamy WHERE date >= :from_date AND price >= :price_from";
+            $sql = "SELECT id, name, email, cat, descr, pic, price, date FROM zaznamy WHERE date >= :from_date AND price >= :price_from";
                     
             if(isset($payload->cat)  & $payload->cat != ""){
                 $param[":cat"] = $payload->cat;
@@ -34,13 +34,22 @@
             }else{
                 $param[":from_date"] = "1970-01-01";
             }
+            $sql = $sql . " LIMIT ";
+            if(isset($payload->limit) & gettype($payload->limit) == "integer" & $payload->limit < 100 & $payload->limit > 0){
+                $sql .= $payload->limit;
+            }else{
+                $sql .= 50;
+            }
+            if(isset($payload->limit) & gettype($payload->limit) == "integer"){
+                $sql .= " OFFSET " . $payload->offset;
+            }
+
             $result = dbio($sql, $param);
         }
-        echo json_encode($result);
+        print("{\"estate\":\"0\",\"result\":\"ok\",\"request\":".json_encode($payload).",\n\"response\":".json_encode($result)."}");
     }catch(Exception $e){                                               //some db exception
-        $error = "system exception";
-        echo json_encode($e);
+        echo json_encode("{\"estate\":\"1\",\"errortype\":\"serverexception\",\"msg\":\"unknown exception\"}");
     }catch(notValidinException $e){                                         //something in json payload was missing
-        echo json_encode($e);
+        echo json_encode("{\"estate\":\"1\",\"errortype\":\"inputexception\",\"msg\":\"".$e->getMessage()."\"}");
     }
 ?>
