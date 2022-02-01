@@ -15,19 +15,20 @@
             if(isset($payload->id) & isset($payload->passwd)){
                 if($payload->id != NULL & $payload->passwd != NULL){
                     $param = array();
-                    $param[":id"] = $payload->id;
+                    $param[":id"] = intval($payload->id);
 
-                    if(gettype($param[":id"]) != "integer" & $payload->passwd){         //to do date format checking
+                    if(gettype($param[":id"]) != "integer" & gettype($payload->passwd)=="string"){
                         throw new notValidinException("type of something in payload is incorrect");
                     }
-                    $sql = "SELECT password FROM zaznamy WHERE id=:id";
+                    $sql = "SELECT passwd FROM zaznamy WHERE id=:id";
                     $sswordsearch = dbio($sql, $param);
                     if(isset($sswordsearch[0])){
                         $sswordsearch = $sswordsearch[0]; 
-                        if(property_exists($sswordsearch,"password")){
-                            $sswordsearch = $sswordsearch->password;
-                            if(password_verify($payload->password, $sswordsearch)){
+                        if(property_exists($sswordsearch,"passwd")){
+                            $sswordsearch = $sswordsearch->passwd;
+                            if(password_verify($payload->passwd, $sswordsearch)){
                                 dbio("DELETE FROM zaznamy WHERE id=:id", [":id"=>$payload->id]);
+                                print("{\"estate\":\"0\",\"result\":\"ok\", \"id\":\"".$payload->id."\", \"msg\":\"removed\"}");
                             }else{
                                 throw new InputException("Wrong password.");    
                             }
@@ -38,18 +39,20 @@
                         throw new InputException("Wrong password.");
                     }
                 }else{
-                    throw new notValidinException("wrong payload");
+                    throw new notValidinException("Wrong payload");
                 }
             }else{
                 throw new notValidinException("wrong payload");
             }
         }
-        $jsonout = new \stdClass();
-        $jsonout->status = "ok";
-        echo json_encode($jsonout);
-    }catch(Exception $e){                                               //some db exception
-        echo json_encode("{\"estate\":\"1\",\"errortype\":\"serverexception\",\"msg\":\"unknown exception\"}");
     }catch(notValidinException $e){                                         //something in json payload was missing
-        echo json_encode("{\"estate\":\"1\",\"errortype\":\"inputexception\",\"msg\":\"".$e->getMessage()."\"}");
+        http_response_code(403);
+        print("{\"estate\":\"1\",\"errortype\":\"inputexception\",\"msg\":\"".$e->getMessage()."\"}");
+    }catch(InputException $e){
+        http_response_code(403);
+        print("{\"estate\":\"1\",\"errortype\":\"inputexception\",\"msg\":\"".$e->getMessage()."\"}");
+    }catch(Exception $e){
+        http_response_code(403);
+        print("{\"estate\":\"1\",\"errortype\":\"serverexception\",\"msg\":\"unknown exception\"}");
     }
 ?>

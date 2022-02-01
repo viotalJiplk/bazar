@@ -6,6 +6,7 @@
         "upload_picture": "endpoints/pictureupload.php",
         "login": "endpoints/login.php",
         "signup": "endpoints/signup.php",
-        "logout": "endpoints/logout.php"
+        "logout": "endpoints/logout.php",
+        "remove": "endpoints/remove.php"
     }
 }

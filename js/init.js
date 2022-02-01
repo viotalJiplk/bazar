@@ -38,6 +38,7 @@ function on_ajaxload(){
     }
 }
 
+//todo pokud nastane po loadu, tak volání api nebuou fungovat
 function callbackfunc(resText){
     localStorage.setItem("api", resText);
     window.api = JSON.parse(resText);
