@@ -41,14 +41,14 @@ function dbio(string $sql, array $param){
         return $result;
     }catch(PDOException $e) {           
         $ecode = $stmt->errorCode();                                    //zpracování výjimky databáze
+        $conn = null;
         throw new dbIOException("DB: PDOexcepion", $ecode);
-        $conn = null;
     }catch(AttrException $e){                                               //zpracování výjimky atributů spojení s databází 
+        $conn = null;
         throw new dbIOException("DB: exception when setting attribute");
-        $conn = null;
     }catch(Exception $e){
-        throw new dbIOException("DB: general excepion");
         $conn = null;
+        throw new dbIOException("DB: general excepion");
     }
 }
 ?>
