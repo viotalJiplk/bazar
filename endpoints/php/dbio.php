@@ -39,8 +39,12 @@ function dbio(string $sql, array $param){
         }
         $conn = null;
         return $result;
-    }catch(PDOException $e) {           
-        $ecode = $stmt->errorCode();                                    //zpracování výjimky databáze
+    }catch(PDOException $e) {     
+        if(isset($stmt)) {
+            $ecode = $stmt->errorCode();                                    //zpracování výjimky databáze
+        }else{
+            $ecode = 0;
+        }      
         $conn = null;
         throw new dbIOException("DB: PDOexcepion", $ecode);
     }catch(AttrException $e){                                               //zpracování výjimky atributů spojení s databází 

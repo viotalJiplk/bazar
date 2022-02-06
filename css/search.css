@@ -42,9 +42,11 @@ img{
 .img-max{
     position: fixed;
     top: 1%;
-    height: 98%;
+    height: 95%;
     max-width: 98%;
     z-index: 3;
+    left: 50%;
+    transform: translate(-50%)
 }
 #bg{
     visibility: hidden;
@@ -56,4 +58,12 @@ img{
     right: 0px;
     z-index: 2;
     opacity: 0.9;
+}
+#bg > p{
+    position: fixed;
+    bottom: 0px;
+    height: 1%;
+    transform: translate(-50%);
+    left: 50%;
+    color: white;
 }

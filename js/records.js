@@ -120,9 +120,9 @@ function rmbuttonerrorcallback(status, resText){
 function change_photores(img){
     if(!img.classList.contains("img-max")){
         img.classList.add("img-max");
-        document.getElementById("bg").style.visibility = "visible"
+        document.getElementById("bg").style.visibility = "visible";
     }else{
         img.classList.remove("img-max");
-        document.getElementById("bg").style.visibility = "hidden"
+        document.getElementById("bg").style.visibility = "hidden";
     }
 }
