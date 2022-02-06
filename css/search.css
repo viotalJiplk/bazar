@@ -22,7 +22,7 @@ h1{
 }
 img{
     height: 9ch;
-    width: 16ch;
+    max-width: 16ch;
 }
 .record{
     width: 98%;
@@ -38,4 +38,22 @@ img{
 }
 #page_navigation p {
     display: inline;
+}
+.img-max{
+    position: fixed;
+    top: 1%;
+    height: 98%;
+    max-width: 98%;
+    z-index: 3;
+}
+#bg{
+    visibility: hidden;
+    position: fixed;
+    background-color: rgb(75, 75, 75);
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 2;
+    opacity: 0.9;
 }

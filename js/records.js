@@ -39,7 +39,32 @@ function add_records(records){
             }else{
                 element.pic = "pictures/" + element.pic;
             }
-            record.innerHTML = "<img src=\"" + element.pic + "\"></img><p>Kontakt: <a href=\"mailto://" + element.email + "\">"+ element.email +"</a></p><p>Kategorie: " + element.cat + "</p><p>Popis: </p><p>" + element.descr + "</p><p>Cena: " + element.price + " Kč</p>";
+            let img = document.createElement("img");
+            img.addEventListener("click",function(e) {
+                console.log(e.target);
+                change_photores(e.target);               
+            });
+
+            img.setAttribute("src", element.pic);
+            let p = document.createElement("p");
+            let a = document.createElement("a");
+            a.setAttribute("href","mailto://" + element.email);
+            a.innerText = element.email;
+            let contact = p.cloneNode();
+            let cnode = document.createTextNode("Kontakt: ");
+            contact.appendChild(cnode);
+            contact.appendChild(a);
+            let descr = p.cloneNode();
+            descr.innerText = "Popis: " + element.descr;
+
+            let price = p.cloneNode();
+            price.innerText = "Cena: " + element.price + " Kč";
+
+            record.appendChild(img);
+            record.appendChild(contact);
+            record.appendChild(descr);
+            record.appendChild(price);
+
             record.setAttribute("id", element.id);
             let rmbutton = document.createElement("button");
             rmbutton.innerText = "remove";
@@ -89,5 +114,15 @@ function rmbuttonerrorcallback(status, resText){
         }
     }else{
         console.error(resText);
+    }
+}
+
+function change_photores(img){
+    if(!img.classList.contains("img-max")){
+        img.classList.add("img-max");
+        document.getElementById("bg").style.visibility = "visible"
+    }else{
+        img.classList.remove("img-max");
+        document.getElementById("bg").style.visibility = "hidden"
     }
 }
