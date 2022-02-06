@@ -22,6 +22,7 @@ for the JavaScript code in this page.
 */
 
 const ajaxloaded = new Event('ajaxloaded');
+const settingsloaded = new Event('settingsloaded');
 const navloaded = new Event('navloaded');
 
 //include all required scripts

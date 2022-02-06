@@ -21,16 +21,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
-testapi = localStorage.getItem("api");
-if(testapi == "" | testapi == null){
-    ajax("endpoints/","GET",callbackfunc);
-}else{
-    window.api = JSON.parse(testapi);
-}
-
 window.addEventListener("navloaded", on_ajaxload);
 
 function on_ajaxload(){
+    testapi = localStorage.getItem("api");
+    if(testapi == "" | testapi == null){
+        ajax("endpoints/","GET",callbackfunc);
+    }else{
+        window.api = JSON.parse(testapi);
+    }
+    window.dispatchEvent(settingsloaded);
     account = localStorage.getItem("account");
     if(account != "" & account != null){
         document.getElementById("login").innerText = "Účet";

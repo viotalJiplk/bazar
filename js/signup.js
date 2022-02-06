@@ -20,9 +20,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 @licend  The above is the entire license notice
 for the JavaScript code in this page.
 */
+window.addEventListener("settingsloaded", onsettingsloaded);
 
-document.getElementById("submitbutton").addEventListener("click", signup)
-
+function onsettingsloaded(){
+    document.getElementById("submitbutton").addEventListener("click", signup)
+}
 /**
  * function to try to sign up
  */

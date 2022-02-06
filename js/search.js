@@ -21,9 +21,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
-document.getElementById("submitbutton").addEventListener("click", function(){search()});
 lastoffset = 0;
 limit = 50;
+
+window.addEventListener("settingsloaded", onsettingsloaded);
+
+function onsettingsloaded(){
+    document.getElementById("submitbutton").addEventListener("click", function(){search()});
+    search();
+}
+
 /**
  * function to do request to server for records
  */
@@ -93,5 +100,3 @@ function callback_search(resText){
         console.error(resText);
     }
 }
-
-search();
