@@ -13,7 +13,7 @@
         }else{
             $param = array();
 
-            $sql = "SELECT id, name, email, cat, descr, pic, price, date FROM zaznamy WHERE date >= :from_date AND price >= :price_from";
+            $sql = "SELECT id, uid, name, email, cat, descr, pic, price, date FROM zaznamy WHERE date >= :from_date AND price >= :price_from";
                     
             if(isset($payload->cat)  & $payload->cat != ""){
                 $param[":cat"] = $payload->cat;

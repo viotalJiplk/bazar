@@ -12,25 +12,61 @@
         if($payload == NULL){
             throw new notValidinException("no json sent");
         }else{
-            if(isset($payload->id) & isset($payload->passwd)){
-                if($payload->id != NULL & $payload->passwd != NULL){
+            if(isset($payload->id)){
+                if($payload->id != NULL){
                     $param = array();
                     $param[":id"] = intval($payload->id);
 
-                    if(gettype($param[":id"]) != "integer" & gettype($payload->passwd)=="string"){
+                    if(gettype($param[":id"]) != "integer"){
                         throw new notValidinException("type of something in payload is incorrect");
                     }
-                    $sql = "SELECT passwd FROM zaznamy WHERE id=:id";
+                    $sql = "SELECT passwd, uid FROM zaznamy WHERE id=:id";
                     $sswordsearch = dbio($sql, $param);
                     if(isset($sswordsearch[0])){
                         $sswordsearch = $sswordsearch[0]; 
-                        if(property_exists($sswordsearch,"passwd")){
-                            $sswordsearch = $sswordsearch->passwd;
-                            if(password_verify($payload->passwd, $sswordsearch)){
-                                dbio("DELETE FROM zaznamy WHERE id=:id", [":id"=>$payload->id]);
-                                print("{\"estate\":\"0\",\"result\":\"ok\", \"id\":\"".$payload->id."\", \"msg\":\"removed\"}");
+                        if(property_exists($sswordsearch,"passwd") & property_exists($sswordsearch,"uid")){
+                            if(isset($_SESSION["id"])){
+                                if($_SESSION["id"] != NULL & $_SESSION["id"] == $sswordsearch->uid){
+                                    remove_record($payload->id);
+                                }else{
+                                    if(isset($payload->passwd)){
+                                        if($payload->passwd != NULL){
+                                            if(gettype($payload->passwd)=="string"){
+                                                $sswordsearch = $sswordsearch->passwd;
+                                                if(password_verify($payload->passwd, $sswordsearch)){
+                                                    remove_record($payload->id);
+                                                }else{
+                                                    throw new InputException("Wrong password.");    
+                                                }
+                                            }else{
+                                                throw new notValidinException("type of something in payload is incorrect");
+                                            }
+                                        }else{
+                                            throw new notValidinException("Wrong payload");
+                                        }
+                                    }else{
+                                        throw new notValidinException("Wrong payload");
+                                    }
+                                }
                             }else{
-                                throw new InputException("Wrong password.");    
+                                if(isset($payload->passwd)){
+                                    if($payload->passwd != NULL){
+                                        if(gettype($payload->passwd)=="string"){
+                                            $sswordsearch = $sswordsearch->passwd;
+                                            if(password_verify($payload->passwd, $sswordsearch)){
+                                                remove_record($payload->id);
+                                            }else{
+                                                throw new InputException("Wrong password.");    
+                                            }
+                                        }else{
+                                            throw new notValidinException("type of something in payload is incorrect");
+                                        }
+                                    }else{
+                                        throw new notValidinException("Wrong payload");
+                                    }
+                                }else{
+                                    throw new notValidinException("Wrong payload");
+                                }
                             }
                         }else{
                             throw new InputException("Wrong password.");
@@ -54,5 +90,11 @@
     }catch(Exception $e){
         http_response_code(403);
         print("{\"estate\":\"1\",\"errortype\":\"serverexception\",\"msg\":\"unknown exception\"}");
+    }
+
+
+    function remove_record(int $id){
+        dbio("DELETE FROM zaznamy WHERE id=:id", [":id"=>$id]);
+        print("{\"estate\":\"0\",\"result\":\"ok\", \"id\":\"".$id."\", \"msg\":\"removed\"}");
     }
 ?>

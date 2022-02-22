@@ -46,7 +46,7 @@ function dbio(string $sql, array $param){
             $ecode = 0;
         }      
         $conn = null;
-        throw new dbIOException("DB: PDOexcepion", $ecode);
+        throw new dbIOException("DB: PDOexcepion", 0);
     }catch(AttrException $e){                                               //zpracování výjimky atributů spojení s databází 
         $conn = null;
         throw new dbIOException("DB: exception when setting attribute");

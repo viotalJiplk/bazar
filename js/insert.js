@@ -21,20 +21,35 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
+window.addEventListener("settingsloaded", onsettingsloaded);
+
+function onsettingsloaded(){
+    if(window.account != null){
+        document.getElementById("id_name").setAttribute("readonly", "readonly");
+        document.getElementById("id_name").value = window.account.uname;
+        document.getElementById("id_email").setAttribute("readonly", "readonly");
+        document.getElementById("id_email").value = window.account.email;
+    }
+}
+
 /**
  * inserts record into db
  */
 function insert(){
     let json = {
-        "name": document.getElementById("id_name").value,
-        "email": document.getElementById("id_email").value,
-        "passwd": document.getElementById("id_passwd").value,
         "cat": document.getElementById("id_cat").value,
         "descr": document.getElementById("id_descr").value,
         "price": Number(document.getElementById("id_price").value),
     }
+    if(window.account != null){
+        json.loggedin = true
+    }else{
+        json.name = document.getElementById("id_name").value;
+        json.email = document.getElementById("id_email").value;
+        json.passwd = document.getElementById("id_passwd").value;
+    }
     json = JSON.stringify(json);
-    ajax(window.api.endpoints.insert, "POST", callback_insert, json)
+    ajax(window.api.endpoints.insert, "POST", callback_insert, json);
 }
 
 /**
@@ -44,15 +59,17 @@ function insert(){
 function callback_insert(responseText){
     let json = JSON.parse(responseText);
     if(json.status == "ok"){
-        const div = create_status_div("nahráno", 0);
-        const log_div = document.getElementById("log");
-        log_div.appendChild(div);
+        // const div = create_status_div("nahráno", 0);
+        // const log_div = document.getElementById("log");
+        // log_div.appendChild(div);
+        alert("nahráno");
     }else{
-        console.log("error occurred");
-        console.log(json);
-        const div = create_status_div("error", 1);
-        const log_div = document.getElementById("log");
-        log_div.appendChild(div);
+        // console.log("error occurred");
+        // console.log(json);
+        // const div = create_status_div("error", 1);
+        // const log_div = document.getElementById("log");
+        // log_div.appendChild(div);
+        alert("chyba");
     }
 }
 

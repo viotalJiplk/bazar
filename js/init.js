@@ -24,22 +24,28 @@ for the JavaScript code in this page.
 window.addEventListener("navloaded", on_ajaxload);
 
 function on_ajaxload(){
-    testapi = localStorage.getItem("api");
+    let testapi = localStorage.getItem("api");
     if(testapi == "" | testapi == null){
         ajax("endpoints/","GET",callbackfunc);
     }else{
         window.api = JSON.parse(testapi);
-    }
-    window.dispatchEvent(settingsloaded);
-    account = localStorage.getItem("account");
-    if(account != "" & account != null){
-        document.getElementById("login").innerText = "Účet";
-        document.getElementById("login").setAttribute("href", "account.html");
+        trylogingin()
     }
 }
 
-//todo pokud nastane po loadu, tak volání api nebuou fungovat
+function trylogingin(){
+    let account = localStorage.getItem("account");
+    if(account != "" & account != null){
+        window.account = JSON.parse(account);
+        document.getElementById("login").innerText = "Účet";
+        document.getElementById("login").setAttribute("href", "account.html");
+    }
+    window.dispatchEvent(settingsloaded);
+}
+
 function callbackfunc(resText){
     localStorage.setItem("api", resText);
     window.api = JSON.parse(resText);
+    window.dispatchEvent(settingsloaded);
+    trylogingin()
 }

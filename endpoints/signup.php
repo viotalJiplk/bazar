@@ -18,17 +18,19 @@
                         $uid =  dbio("SELECT uid FROM users WHERE email = :email", array(":email" => $payload->email));
                         if(isset($uid[0])){
                             $uid = $uid[0]; 
-                            if(property_exists($uid,"uid")){
+                            if(property_exists($uid,"uid")& property_exists($uid,"uid")& property_exists($uisd,"uname")){
                                 $id = $uid->uid;
+                                $uname = $uid->uname;
+                                $email = $uid->email;
                             }else{
                                 throw new Exception();
                             }
                         }else{
                             throw new Exception();
                         }
-                        $_SESSION["email"] = $payload->email;
+                        $_SESSION["email"] = $email;
                         $_SESSION["id"] = $id;
-                        print("{\"estate\":\"0\",\"result\":\"ok\", \"email\":\"".$payload->email."\", \"msg\":\"logged in\"}");
+                        print("{\"estate\":\"0\",\"result\":\"ok\", \"email\":\"".$payload->email. "\",\"uname\":\"" . $uname."\",\"uid\":\"" . $uid."\", \"msg\":\"logged in\"}");
                     }else{
                         throw new InputException("You can only use alphanumeric characters in email.");
                     }

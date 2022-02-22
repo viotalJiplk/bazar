@@ -24,6 +24,10 @@ window.addEventListener("settingsloaded", onsettingsloaded);
 
 function onsettingsloaded(){
     document.getElementById("logoutbutton").addEventListener("click", logout);
+    if(window.account != null){
+        document.getElementById("email").innerText = account.email;
+        document.getElementById("uname").innerText = account.uname;
+    }
 }
 
 function logoutcallback(resText){

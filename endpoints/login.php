@@ -15,16 +15,18 @@
             if(!isset($_SESSION["email"])){
                 if(property_exists($payload, "email") && property_exists($payload, "password")){
                     if(gettype($payload->email) == "string" & gettype($payload->password) == "string"){
-                        $sswordsearch =  dbio("SELECT uid, password FROM users WHERE email = :email", array(":email" => $payload->email));
+                        $sswordsearch =  dbio("SELECT uid, password, uname, email FROM users WHERE email = :email", array(":email" => $payload->email));
                         if(isset($sswordsearch[0])){
                             $sswordsearch = $sswordsearch[0]; 
-                            if(property_exists($sswordsearch,"password") & property_exists($sswordsearch,"uid")){
+                            if(property_exists($sswordsearch,"password") & property_exists($sswordsearch,"uid")& property_exists($sswordsearch,"uname")& property_exists($sswordsearch,"email")){
                                 $id = $sswordsearch->uid;
+                                $uname = $sswordsearch->uname;
+                                $email = $sswordsearch->email;
                                 $sswordsearch = $sswordsearch->password;
                                 if(password_verify($payload->password, $sswordsearch)){
                                     $_SESSION["email"] = $payload->email;
                                     $_SESSION["id"] = $id;
-                                    print("{\"estate\":\"0\",\"result\":\"ok\", \"email\":\"".$payload->email."\", \"msg\":\"logged in\"}");
+                                    print("{\"estate\":\"0\",\"result\":\"ok\", \"email\":\"".$payload->email. "\",\"uname\":\"" . $uname."\",\"uid\":\"" . $id."\", \"msg\":\"logged in\"}");
                                 }else{
                                     throw new InputException("Wrong email or password.");    
                                 }

@@ -65,11 +65,13 @@ function add_records(records){
             record.appendChild(descr);
             record.appendChild(price);
 
-            record.setAttribute("id", element.id);
+            record.setAttribute("id", "div_" + element.id);
+            record.setAttribute("data-uid", element.uid);
             let rmbutton = document.createElement("button");
             rmbutton.innerText = "remove";
             rmbutton.addEventListener("click", function(e){rmbuttonf(e.target.getAttribute("id"))});
             rmbutton.setAttribute("id", element.id);
+            rmbutton.setAttribute("data-uid", element.uid);
 
             record.appendChild(rmbutton);
 
@@ -79,18 +81,31 @@ function add_records(records){
 }
 
 function rmbuttonf(id){
-    let passwd = prompt("Zadejte heslo.");
-    console.log(id);
     payload = {
-        "passwd": passwd,
         "id": id
     }
-    ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
+    let recuid = document.getElementById("div_" + id).getAttribute("data-uid"); 
+    if(typeof window.account !== "undefined"){
+        if(recuid != window.account.uid){
+            payload.passwd = prompt("Zadejte heslo.");
+            if(payload.passwd != null){
+                ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
+            }
+        }else{
+            ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
+        }
+    }else{
+        payload.passwd = prompt("Zadejte heslo.");
+        if(payload.passwd != null){
+            ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
+        }
+    }
 }
 function rmbuttoncallback(resText){
     if(resText != ""){
-        res = JSON.parse(resText);
+        let res = JSON.parse(resText);
         if(res.estate == 0 & res.result == "ok"){
+            document.getElementById("div_" + res.id).textContent="";
             alert("odstraněno");
         }else{
             console.error("unknown error");
