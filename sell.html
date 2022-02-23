@@ -10,12 +10,14 @@
 	<body>
 		<div id="content">
 			<h1>Bazar - prodej</h1>
-				<label for="name">Jméno:</label>
-				<input type="text" name="name" id="id_name"/>
-				<label for="email">* Email:</label>
-				<input required type="email" name="email" id="id_email"/>
-				<label for="passwd">* Heslo:<br>
-				<input required type="password" name="passwd" id="id_passwd"/>
+				<div id="notlogedin">
+					<label for="name">Jméno:</label>
+					<input type="text" name="name" id="id_name"/>
+					<label for="email">* Email:</label>
+					<input required type="email" name="email" id="id_email"/>
+					<label for="passwd">* Heslo:<br>
+					<input required type="password" name="passwd" id="id_passwd"/>
+				</div>
 				<label for="cat">* Kategorie:<br>
 				<select required name="cat" id="id_cat">
 						<option value="tech">Technika</option>

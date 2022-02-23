@@ -25,6 +25,7 @@ window.addEventListener("settingsloaded", onsettingsloaded);
 
 function onsettingsloaded(){
     if(window.account != null){
+        document.getElementById("notlogedin").style.display = "none";
         document.getElementById("id_name").setAttribute("readonly", "readonly");
         document.getElementById("id_name").value = window.account.uname;
         document.getElementById("id_email").setAttribute("readonly", "readonly");
