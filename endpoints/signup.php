@@ -15,10 +15,10 @@
                     if(preg_match('/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD', $payload->email)){ //regex from http://emailregex.com/
                         $sswordhash = password_hash($payload->password, PASSWORD_DEFAULT);
                         dbio("INSERT INTO users (email, password, uname)VALUES (:email, :sswordhash, :uname);", array(":email"=>$payload->email,":sswordhash" => $sswordhash, ":uname" => $payload->username));
-                        $uid =  dbio("SELECT uid FROM users WHERE email = :email", array(":email" => $payload->email));
+                        $uid =  dbio("SELECT uid, email, uname FROM users WHERE email = :email", array(":email" => $payload->email));
                         if(isset($uid[0])){
                             $uid = $uid[0]; 
-                            if(property_exists($uid,"uid")& property_exists($uid,"uid")& property_exists($uisd,"uname")){
+                            if(property_exists($uid,"uid")& property_exists($uid,"uid")& property_exists($uid,"uname")){
                                 $id = $uid->uid;
                                 $uname = $uid->uname;
                                 $email = $uid->email;
@@ -30,7 +30,7 @@
                         }
                         $_SESSION["email"] = $email;
                         $_SESSION["id"] = $id;
-                        print("{\"estate\":\"0\",\"result\":\"ok\", \"email\":\"".$payload->email. "\",\"uname\":\"" . $uname."\",\"uid\":\"" . $uid."\", \"msg\":\"logged in\"}");
+                        print("{\"estate\":\"0\",\"result\":\"ok\", \"email\":\"".$payload->email. "\",\"uname\":\"" . $uname."\",\"uid\":\"" . $id."\", \"msg\":\"logged in\"}");
                     }else{
                         throw new InputException("You can only use alphanumeric characters in email.");
                     }
