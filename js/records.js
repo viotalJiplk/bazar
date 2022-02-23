@@ -28,7 +28,6 @@ recorddiv.setAttribute("class", "record");
  * inserts records to page 
  * @param {Object} records js object with records 
  */
-
 function add_records(records){
     const cnt = document.getElementById("records");
     if(records.forEach != undefined){
@@ -80,6 +79,10 @@ function add_records(records){
     }
 }
 
+/**
+ * function to remove record
+ * @param {string} id id of record
+ */
 function rmbuttonf(id){
     payload = {
         "id": id
@@ -101,6 +104,11 @@ function rmbuttonf(id){
         }
     }
 }
+
+/**
+ * callback function to remove button from frontend after sucessful backend remove
+ * @param {string} resText body of http response
+ */
 function rmbuttoncallback(resText){
     if(resText != ""){
         let res = JSON.parse(resText);
@@ -116,6 +124,11 @@ function rmbuttoncallback(resText){
     }
 }
 
+/**
+ * callback for error while removing
+ * @param {number} status http status code
+ * @param {string} resText text, with which server responded 
+ */
 function rmbuttonerrorcallback(status, resText){
     if(resText != ""){
         res = JSON.parse(resText);
@@ -132,6 +145,11 @@ function rmbuttonerrorcallback(status, resText){
     }
 }
 
+
+/**
+ * function to change img size (maximize or minimize)
+ * @param {HTMLImageElement} img img to be changed size of
+ */
 function change_photores(img){
     if(!img.classList.contains("img-max")){
         img.classList.add("img-max");

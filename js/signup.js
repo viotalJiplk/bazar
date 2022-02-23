@@ -22,9 +22,13 @@ for the JavaScript code in this page.
 */
 window.addEventListener("settingsloaded", onsettingsloaded);
 
+/**
+ * this happens after settings is loaded
+ */
 function onsettingsloaded(){
     document.getElementById("submitbutton").addEventListener("click", signup)
 }
+
 /**
  * function to try to sign up
  */
@@ -45,6 +49,10 @@ function signup(){
     }
 }
 
+/**
+ * function to respond to http sucess on login try
+ * @param {String} responseText body of http response
+ */
 function signupcallback(resText){
     if(resText != ""){
         res = JSON.parse(resText);
@@ -60,6 +68,11 @@ function signupcallback(resText){
     }
 }
 
+/**
+ * callback for error while trying to create an account
+ * @param {number} status http status code
+ * @param {string} resText text, with which server responded 
+ */
 function signuperrorcallback(status, resText){
     if(resText != ""){
         res = JSON.parse(resText);

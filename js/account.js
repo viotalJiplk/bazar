@@ -22,6 +22,9 @@ for the JavaScript code in this page.
 */
 window.addEventListener("settingsloaded", onsettingsloaded);
 
+/**
+ * this happens after settings is loaded
+ */
 function onsettingsloaded(){
     document.getElementById("logoutbutton").addEventListener("click", logout);
     if(window.account != null){
@@ -30,6 +33,10 @@ function onsettingsloaded(){
     }
 }
 
+/**
+ * function to process response of http logout request
+ * @param {String} responseText body of http response
+ */
 function logoutcallback(resText){
     if(resText != ""){
         res = JSON.parse(resText);
@@ -45,6 +52,11 @@ function logoutcallback(resText){
     }
 }
 
+/**
+ * function to process response of http logout request error
+ * @param {String} responseText body of http response
+ * @param {number} status http response code
+ */
 function logouterrorcallback(status, resText){
     if(resText != ""){
         res = JSON.parse(resText);
@@ -55,11 +67,7 @@ function logouterrorcallback(status, resText){
 }
 
 /**
- * function to try loging in
- * @param {string} email 
- * @param {string} password
- * @param {Function} callback
- * @param {Function} callbackerror
+ * function to try loging out
  */
 function logout(){
     ajax(window.api.endpoints.logout, "POST", logoutcallback, "", logouterrorcallback);    

@@ -22,9 +22,13 @@ for the JavaScript code in this page.
 */
 window.addEventListener("settingsloaded", onsettingsloaded);
 
+/**
+ * this happens after settings is loaded
+ */
 function onsettingsloaded(){
     document.getElementById("submitbutton").addEventListener("click", getlogincredentials);
 }
+
 /**
  * function to extract login informations from page
  */
@@ -34,6 +38,10 @@ function getlogincredentials(){
     login(email, password, logincallback, loginerrorcallback);
 }
 
+/**
+ * callback for while trying to sign in
+ * @param {string} resText text, with which server responded 
+ */
 function logincallback(resText){
     if(resText != ""){
         res = JSON.parse(resText);
@@ -49,6 +57,11 @@ function logincallback(resText){
     }
 }
 
+/**
+ * callback for error while trying to log in
+ * @param {number} status http status code
+ * @param {string} resText text, with which server responded 
+ */
 function loginerrorcallback(status, resText){
     if(resText != ""){
         res = JSON.parse(resText);

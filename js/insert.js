@@ -23,6 +23,9 @@ for the JavaScript code in this page.
 
 window.addEventListener("settingsloaded", onsettingsloaded);
 
+/**
+ * this happens after settings is loaded
+ */
 function onsettingsloaded(){
     if(window.account != null){
         document.getElementById("notlogedin").style.display = "none";
@@ -55,7 +58,7 @@ function insert(){
 
 /**
  * function to provide feedback to user on upload/insert function
- * @param {String} responseText 
+ * @param {String} responseText body of http response
  */
 function callback_insert(responseText){
     let json = JSON.parse(responseText);
@@ -75,7 +78,7 @@ function callback_insert(responseText){
 }
 
 /**
- * 
+ * function to create status div
  * @param {String} status status to be shown in div
  * @param {Number} statu_code  indicates status of code < 0 => error
  * @returns {HTMLDivElement} statusdiv

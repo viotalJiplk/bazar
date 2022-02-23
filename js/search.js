@@ -26,6 +26,9 @@ limit = 50;
 
 window.addEventListener("settingsloaded", onsettingsloaded);
 
+/**
+ * this happens after settings is loaded
+ */
 function onsettingsloaded(){
     document.getElementById("submitbutton").addEventListener("click", function(){search()});
     search();
@@ -33,6 +36,7 @@ function onsettingsloaded(){
 
 /**
  * function to do request to server for records
+ * @param {number} offset offset from first possible result
  */
 function search(offset = 0){
     const cat = document.getElementById("id_cat").value;
@@ -57,7 +61,6 @@ function search(offset = 0){
  * push records to website
  * @param {string} resText json of records
  */
-
 function callback_search(resText){
     if(resText != ""){
         res = JSON.parse(resText);

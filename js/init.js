@@ -23,6 +23,9 @@ for the JavaScript code in this page.
 
 window.addEventListener("navloaded", on_ajaxload);
 
+/**
+ * this happens after ajax is loaded
+ */
 function on_ajaxload(){
     let testapi = localStorage.getItem("api");
     if(testapi == "" | testapi == null){
@@ -33,6 +36,9 @@ function on_ajaxload(){
     }
 }
 
+/**
+ * if user is logged in changes "přihlášení" to "účet" and populates window.account
+*/
 function trylogingin(){
     let account = localStorage.getItem("account");
     if(account != "" & account != null){
@@ -43,6 +49,10 @@ function trylogingin(){
     window.dispatchEvent(settingsloaded);
 }
 
+/**
+ * callback function to remove button from frontend after sucessful backand remove
+ * @param {string} resText body of http response
+ */
 function callbackfunc(resText){
     localStorage.setItem("api", resText);
     window.api = JSON.parse(resText);
