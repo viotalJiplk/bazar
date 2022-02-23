@@ -33,6 +33,8 @@ function onsettingsloaded(){
         document.getElementById("id_name").value = window.account.uname;
         document.getElementById("id_email").setAttribute("readonly", "readonly");
         document.getElementById("id_email").value = window.account.email;
+        document.getElementById("upload_picture_button").addEventListener("click", upload_photo);
+        document.getElementById("upload_record").addEventListener("click", insert);
     }
 }
 

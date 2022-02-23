@@ -2,6 +2,7 @@
 <html lang="cs-cz">
 	<head>
 		<meta charset="utf-8"/>
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self'">
 		<title>Bazar - Prodat</title>
 		<script src="template.js"></script>
 		<script src="js/insert.js" defer></script>
@@ -29,10 +30,10 @@
 				<textarea required cols="30" rows="5" name="descr" id="id_descr"></textarea>
 
 				<label for="pic">* Obrázek:</label>
-				<input required size="10" type="file" name="pic" id="id_pic"/><button onclick="upload_photo()">nahrát fotku</button>
+				<input required size="10" type="file" name="pic" id="id_pic"/><button id="upload_picture_button">nahrát fotku</button>
 				<label for="price">Cena:</label>
 				<input required type="number" min="0"  name="price" id="id_price"/>
-				<button onclick="insert()">Zveřejnit</button>
+				<button id="upload_record">Zveřejnit</button>
 				<div id="log"></div>
 		</div>
 	</body>
