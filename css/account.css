@@ -12,3 +12,6 @@
 #logindiv > p{
     margin: 0px;
 }
+label{
+    display: block;
+}

@@ -10,25 +10,25 @@
 	<body>
 		<div id="content">
 			<h1>Bazar - prodej</h1>
-				Jméno:<br>
+				<label for="name">Jméno:</label>
 				<input type="text" name="name" id="id_name"/>
-				<br>* Email:<br>
+				<label for="email">* Email:</label>
 				<input required type="email" name="email" id="id_email"/>
-				<br>* Heslo:<br>
+				<label for="passwd">* Heslo:<br>
 				<input required type="password" name="passwd" id="id_passwd"/>
-				<br>* Kategorie:<br>
+				<label for="cat">* Kategorie:<br>
 				<select required name="cat" id="id_cat">
 						<option value="tech">Technika</option>
 						<option value="toy">Hračky</option>
 						<option value="art">Umění</option>
 						<option value="oth">Jiné</option>
 				</select>
-				<br>Popis:<br>
+				<label for="descr">Popis:</label>
 				<textarea required cols="30" rows="5" name="descr" id="id_descr"></textarea>
 
-				<br>* Obrázek:<br>
+				<label for="pic">* Obrázek:</label>
 				<input required size="10" type="file" name="pic" id="id_pic"/><button onclick="upload_photo()">nahrát fotku</button>
-				<br>Cena:<br>
+				<label for="price">Cena:</label>
 				<input required type="number" min="0"  name="price" id="id_price"/>
 				<button onclick="insert()">Zveřejnit</button>
 				<div id="log"></div>
