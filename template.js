@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
+//custom events :D
 const ajaxloaded = new Event('ajaxloaded');
 const settingsloaded = new Event('settingsloaded');
 const navloaded = new Event('navloaded');
@@ -41,7 +42,7 @@ function add_js(url){
 }
 
 /**
- * 
+ *  function to add scripts to all pages
  * @param {Array} scripts array of scripts to include
  */
 function include(scripts){
@@ -50,12 +51,20 @@ function include(scripts){
   });
 }
 
+/**
+ *  function to add css to all pages
+ * @param {Array} css array of css to include
+ */
 function add_css(css){
   css.forEach(element => {
     document.head.appendChild(create_csstag(element));
   });
 }
 
+/**
+ *  function to set the right nav entry
+ * @param {HTMLNavElement} nav nav, where entry is
+ */
 function set_active(nav){
   let path = window.location.pathname;
   let page = path.split("/").pop();
@@ -68,16 +77,23 @@ function set_active(nav){
   }
 }
 
+/**
+ * function that cretes navigation bar
+ */
 function build_nav(){
   ajax("include/nav.html", "GET", function(res){
       const nav = document.createElement("nav");
-      nav.innerHTML = res;
+      nav.innerHTML = res;  //this should be save while it is managed by server - independently on user input
       set_active(nav);
       document.body.insertBefore(nav, document.body.firstElementChild);
       window.dispatchEvent(navloaded);
     },
     "");
 }
+
+/**
+ * function that cretes footer
+ */
 function build_foo(){
   ajax("include/footer.html", "GET", function(res){
       const foo = document.createElement("footer");
@@ -89,14 +105,29 @@ function build_foo(){
 
 window.onload = on_load;
 
+/**
+ * this will be executed on load
+ */
 function on_load(){
   build_nav();
   build_foo();
 }
 
+/**
+ * function, that creates link tag to link css to page
+ * @param {string} url 
+ * @returns {HTMLLinkElement}
+ */
 function create_csstag(url){
   const link = document.createElement("link");
   link.setAttribute("rel", "stylesheet");
   link.setAttribute("href", url);
   return link;
+}
+
+//lets install service worker
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker
+       .register('sw.js')
+       .then(function() { console.log('Service Worker Registered'); });
 }
