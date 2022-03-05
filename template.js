@@ -26,6 +26,36 @@ const ajaxloaded = new Event('ajaxloaded');
 const settingsloaded = new Event('settingsloaded');
 const navloaded = new Event('navloaded');
 
+firedevents = [];
+
+class events{
+  event = {
+    "ajaxloaded": new Event('ajaxloaded'),
+    "settingsloaded": new Event('settingsloaded'),
+    "navloaded": new Event('navloaded')
+  };
+  constructor(){
+    for(let element in this.event){
+      window.addEventListener(element, this.fireevent);
+    }
+  }
+  fireevent(event){
+    let eventname = event.type;
+    if(!firedevents.includes(eventname)){
+      firedevents.push(eventname);
+    }
+  }
+  addEventListener(name, listener) {
+    if(firedevents.includes(name)){
+      listener();
+    }else{
+      window.addEventListener(name, listener);
+    }
+  }
+}
+
+eventmanager = new events();
+
 //include all required scripts
 include(["js/ajax.js", "js/init.js"]);
 add_css(["include/nav.css", "include/content.css", "include/footer.css"]);
@@ -86,7 +116,7 @@ function build_nav(){
       nav.innerHTML = res;  //this should be save while it is managed by server - independently on user input
       set_active(nav);
       document.body.insertBefore(nav, document.body.firstElementChild);
-      window.dispatchEvent(navloaded);
+      window.dispatchEvent(eventmanager.event.navloaded);
     },
     "");
 }

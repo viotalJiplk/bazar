@@ -16,6 +16,9 @@
                 if($payload->cat != NULL  & $payload->price != NULL){
                     if(isset($payload->loggedin)){
                         if($payload->loggedin){
+                            if(!array_key_exists("email", $_SESSION)){
+                                throw new notValidinException("not logged in");
+                            }
                             $param[":email"] = $_SESSION["email"];
                             $param[":passwd"] = NULL;
                             $param[":uid"]  =  $_SESSION["id"];
@@ -74,8 +77,8 @@
         $jsonout->status = "ok";
         echo json_encode($jsonout);
     }catch(notValidinException $e){                                         //something in json payload was missing
-        echo json_encode("{\"estate\":\"1\",\"errortype\":\"inputexception\",\"msg\":\"".$e->getMessage()."\"}");
+        print("{\"estate\":\"1\",\"errortype\":\"inputexception\",\"msg\":\"".$e->getMessage()."\"}");
     }catch(Exception $e){                                               //some db exception
-        echo json_encode("{\"estate\":\"1\",\"errortype\":\"serverexception\",\"msg\":\"unknown exception\"}");
+        print("{\"estate\":\"1\",\"errortype\":\"serverexception\",\"msg\":\"unknown exception\"}");
     }
 ?>

@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
-window.addEventListener("settingsloaded", onsettingsloaded);
+eventmanager.addEventListener("settingsloaded", onsettingsloaded);
 
 /**
  * this happens after settings is loaded
@@ -33,9 +33,9 @@ function onsettingsloaded(){
         document.getElementById("id_name").value = window.account.uname;
         document.getElementById("id_email").setAttribute("readonly", "readonly");
         document.getElementById("id_email").value = window.account.email;
-        document.getElementById("upload_picture_button").addEventListener("click", upload_photo);
-        document.getElementById("upload_record").addEventListener("click", insert);
     }
+    document.getElementById("upload_picture_button").addEventListener("click", upload_photo);
+    document.getElementById("upload_record").addEventListener("click", insert);
 }
 
 /**
@@ -58,6 +58,11 @@ function insert(){
     ajax(window.api.endpoints.insert, "POST", callback_insert, json);
 }
 
+function rm_session(){
+    localStorage.removeItem("account");
+    location.href = "index.html";
+}
+
 /**
  * function to provide feedback to user on upload/insert function
  * @param {String} responseText body of http response
@@ -76,6 +81,9 @@ function callback_insert(responseText){
         // const log_div = document.getElementById("log");
         // log_div.appendChild(div);
         alert("chyba");
+        if(json.msg == "not logged in"){
+            rm_session();
+        }
     }
 }
 

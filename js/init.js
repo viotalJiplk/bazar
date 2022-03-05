@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 for the JavaScript code in this page.
 */
 
-window.addEventListener("navloaded", on_ajaxload);
+eventmanager.addEventListener("navloaded", on_ajaxload);
 
 /**
  * this happens after ajax is loaded
@@ -46,16 +46,16 @@ function trylogingin(){
         document.getElementById("login").innerText = "Účet";
         document.getElementById("login").setAttribute("href", "account.html");
     }
-    window.dispatchEvent(settingsloaded);
+    window.dispatchEvent(eventmanager.event.settingsloaded);
 }
 
 /**
- * callback function to remove button from frontend after sucessful backand remove
+ * callback function to remove button from frontend after sucessful backend remove
  * @param {string} resText body of http response
  */
 function callbackfunc(resText){
     localStorage.setItem("api", resText);
     window.api = JSON.parse(resText);
-    window.dispatchEvent(settingsloaded);
+    wwindow.dispatchEvent(eventmanager.event.settingsloaded);
     trylogingin()
 }
