@@ -56,6 +56,6 @@ function trylogingin(){
 function callbackfunc(resText){
     localStorage.setItem("api", resText);
     window.api = JSON.parse(resText);
-    wwindow.dispatchEvent(eventmanager.event.settingsloaded);
+    window.dispatchEvent(eventmanager.event.settingsloaded);
     trylogingin()
 }
