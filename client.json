@@ -1,0 +1,113 @@
+{
+    "version": "1.0",
+    "resources": [
+        {
+            "url": "css/account.css",
+            "version":0.2
+        },
+        {
+            "url": "css/search.css",
+            "version":0.1
+        },
+        {
+            "url": "css/sell.css",
+            "version":0.1
+        },
+        {
+            "url": "include/content.css",
+            "version":0.1
+        },
+        {
+            "url": "include/footer.css",
+            "version":0.1
+        },
+        {
+            "url": "include/footer.html",
+            "version":0.1
+        },
+        {
+            "url": "include/nav.css",
+            "version":0.1
+        },
+        {
+            "url": "include/nav.html",
+            "version":0.1
+        },
+        {
+            "url": "js/account.js",
+            "version":0.1
+        },
+        {
+            "url": "js/ajax.js",
+            "version":0.1
+        },
+        {
+            "url": "js/css.js",
+            "version":0.1
+        },
+        {
+            "url": "js/css.js",
+            "version":0.1
+        },
+        {
+            "url": "js/init.js",
+            "version":0.1
+        },
+        {
+            "url": "js/insert.js",
+            "version":0.1
+        },
+        {
+            "url": "js/login.js",
+            "version":0.1
+        },
+        {
+            "url": "js/records.js",
+            "version":0.1
+        },
+        {
+            "url": "js/search.js",
+            "version":0.1
+        },
+        {
+            "url": "js/signup.js",
+            "version":0.1
+        },
+        {
+            "url": "account.html",
+            "version":0.1
+        },
+        {
+            "url": "index.html",
+            "version":0.1
+        },
+        {
+            "url": "law.html",
+            "version":0.1
+        },
+        {
+            "url": "login.html",
+            "version":0.1
+        },
+        {
+            "url": "search.html",
+            "version":0.1
+        },
+        {
+            "url": "sell.html",
+            "version":0.1
+        },
+        {
+            "url": "signup.html",
+            "version":0.1
+        },
+        {
+            "url": "template.js",
+            "version":0.1
+        },
+        {
+            "url": "favicon.svg",
+            "version":0.1
+        }
+    ]
+}
