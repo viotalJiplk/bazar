@@ -47,7 +47,7 @@ function ajax(url, method, callback, payload = "", errorcallback = console.error
                 }else{
                     console.error(this.status, this.responseText);
                 }
-                throw this.status;
+                console.error(this.status);
             }
         }
     }
