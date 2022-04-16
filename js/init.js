@@ -40,11 +40,23 @@ function on_ajaxload(){
  * if user is logged in changes "přihlášení" to "účet" and populates window.account
 */
 function trylogingin(){
-    let account = localStorage.getItem("account");
-    if(account != "" & account != null){
-        window.account = JSON.parse(account);
-        document.getElementById("login").innerText = "Účet";
-        document.getElementById("login").setAttribute("href", "account.html");
+    let unprocessed_jwt = localStorage.getItem("jwt");
+    if(unprocessed_jwt != "" & unprocessed_jwt != null){
+        let jwt = parse_jwt(unprocessed_jwt);
+        if((jwt.exp * 1000) > Date.now()){
+            //lets prepare enviroment
+            window.jwt = jwt;
+            window.account = {
+                "uid": jwt.eu_viotal_bazar_uid,
+                "email": jwt.eu_viotal_bazar_email,
+                "uname": jwt.eu_viotal_bazar_uname
+            }
+            window.encodedjwt = unprocessed_jwt;
+            document.getElementById("login").innerText = "Účet";
+            document.getElementById("login").setAttribute("href", "account.html");
+        }else{  //the jwt is no longer valid
+            localStorage.removeItem("jwt");
+        }
     }
     window.dispatchEvent(eventmanager.event.settingsloaded);
 }

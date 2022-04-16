@@ -42,20 +42,25 @@ function onsettingsloaded(){
  * inserts record into db
  */
 function insert(){
+    let headers = [];
     let json = {
         "cat": document.getElementById("id_cat").value,
         "descr": document.getElementById("id_descr").value,
         "price": Number(document.getElementById("id_price").value),
     }
-    if(window.account != null){
-        json.loggedin = true
+    if(window.jwt != null){
+        json.loggedin = true;
+        headers.push(["Authorization", "Bearer " + window.encodedjwt]);
     }else{
         json.name = document.getElementById("id_name").value;
         json.email = document.getElementById("id_email").value;
         json.passwd = document.getElementById("id_passwd").value;
     }
+    if(window.upload){
+        json.picture = window.upload;
+    }
     json = JSON.stringify(json);
-    ajax(window.api.endpoints.insert, "POST", callback_insert, json);
+    ajax(window.api.endpoints.insert, "POST", callback_insert, json, alert, headers);
 }
 
 function rm_session(){
@@ -73,6 +78,7 @@ function callback_insert(responseText){
         // const div = create_status_div("nahráno", 0);
         // const log_div = document.getElementById("log");
         // log_div.appendChild(div);
+        window.upload = json.name;
         alert("nahráno");
     }else{
         // console.log("error occurred");

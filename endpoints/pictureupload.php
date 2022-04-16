@@ -1,5 +1,4 @@
 <?php
-session_start();
 $folder = "../pictures/";
 $allowed_mime = array("image/svg+xml" => ".svg", "image/jpeg" => ".jpg", "image/png" => ".png", "image/gif" => ".gif");
 $allowed_in_name = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
@@ -32,13 +31,10 @@ if(array_key_exists($_SERVER["CONTENT_TYPE"], $allowed_mime)){
     fclose($fp);
     $fparr = explode("/", $fpname);
     $filename = end($fparr);
-    if(array_key_exists( "up_file" , $_SESSION) & $_SESSION["up_file"] != ""){  //if picture was alredy uploaded in this session
-        unlink($_SESSION["up_file"]);
-    }
-    $_SESSION["up_file"] = $filename;
     fclose($putdata);
     
     $jsonout->status = "ok";
+    $jsonout->name = $fpname;
 }else{
     $jsonout->status = "type of picture not allowed";
 }

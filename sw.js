@@ -1,3 +1,4 @@
+// v 5.1
 /**
  * this function remove things to cache
  * @param {Cache} cache 

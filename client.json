@@ -1,5 +1,5 @@
 {
-    "version": "1.0",
+    "version": "3.1",
     "resources": [
         {
             "url": "css/account.css",
@@ -35,11 +35,11 @@
         },
         {
             "url": "js/account.js",
-            "version":0.1
+            "version":0.2
         },
         {
             "url": "js/ajax.js",
-            "version":0.11
+            "version":0.2
         },
         {
             "url": "js/css.js",
@@ -51,19 +51,19 @@
         },
         {
             "url": "js/init.js",
-            "version":0.1
+            "version":0.2
         },
         {
             "url": "js/insert.js",
-            "version":0.1
+            "version":0.2
         },
         {
             "url": "js/login.js",
-            "version":0.1
+            "version":0.2
         },
         {
             "url": "js/records.js",
-            "version":0.1
+            "version":0.3
         },
         {
             "url": "js/search.js",
@@ -71,7 +71,7 @@
         },
         {
             "url": "js/signup.js",
-            "version":0.1
+            "version":0.2
         },
         {
             "url": "account.html",
@@ -103,6 +103,10 @@
         },
         {
             "url": "template.js",
+            "version":0.2
+        },
+        {
+            "url": "js/jwthelper.js",
             "version":0.1
         },
         {

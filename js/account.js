@@ -41,7 +41,7 @@ function logoutcallback(resText){
     if(resText != ""){
         res = JSON.parse(resText);
         if(res.estate == 0 & res.result == "ok"){
-            localStorage.removeItem("account");
+            localStorage.removeItem("jwt");
             location.href = "index.html";
         }else{
             console.error("unknown error");

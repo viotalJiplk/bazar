@@ -95,7 +95,7 @@ function rmbuttonf(id){
                 ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
             }
         }else{
-            ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
+            ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback , [["Authorization", "Bearer " + window.encodedjwt]]);
         }
     }else{
         payload.passwd = prompt("Zadejte heslo.");

@@ -28,10 +28,11 @@ for the JavaScript code in this page.
  * @param {Function} callback function to call after request is done (text of response would be passed as parameter)
  * @param {string} payload payload of httprequest
  * @param {Function} errorcallback function to call if request failed (http response code != 200) (parameters [response code, response text])
+ * @param {Array} headers http headers
  * @throws httpStatusCode on error
  */
 
-function ajax(url, method, callback, payload = "", errorcallback = console.error){
+function ajax(url, method, callback, payload = "", errorcallback = console.error, headers = []){
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function(){
         if (this.readyState == 4) {
@@ -52,6 +53,9 @@ function ajax(url, method, callback, payload = "", errorcallback = console.error
         }
     }
     xhttp.open(method, url , true);
+    for(i = 0; i < headers.length; i++){
+        xhttp.setRequestHeader(headers[i][0], headers[i][1]);
+    }
     xhttp.send(payload);
 }
 

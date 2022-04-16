@@ -2,11 +2,10 @@
     include_once("php/dbio.php");
     include_once("php/classdef.php");
     include_once("php/helper.php");
-    session_start();
+    include_once("php/verifyjwt.php");
 
     header("Content-type: application/json");
     try{
-        
         $json = file_get_contents('php://input');
         $payload = json_decode($json);
         if($payload == NULL){
@@ -20,33 +19,30 @@
                     if(gettype($param[":id"]) != "integer"){
                         throw new notValidinException("type of something in payload is incorrect");
                     }
+                    $headers = getallheaders();
                     $sql = "SELECT passwd, uid FROM zaznamy WHERE id=:id";
                     $sswordsearch = dbio($sql, $param);
                     if(isset($sswordsearch[0])){
                         $sswordsearch = $sswordsearch[0]; 
                         if(property_exists($sswordsearch,"passwd") & property_exists($sswordsearch,"uid")){
-                            if(isset($_SESSION["id"])){
-                                if($_SESSION["id"] != NULL & $_SESSION["id"] == $sswordsearch->uid){
-                                    remove_record($payload->id);
-                                }else{
-                                    if(isset($payload->passwd)){
-                                        if($payload->passwd != NULL){
-                                            if(gettype($payload->passwd)=="string"){
-                                                $sswordsearch = $sswordsearch->passwd;
-                                                if(password_verify($payload->passwd, $sswordsearch)){
-                                                    remove_record($payload->id);
-                                                }else{
-                                                    throw new InputException("Wrong password.");    
-                                                }
-                                            }else{
-                                                throw new notValidinException("type of something in payload is incorrect");
-                                            }
+                            if(array_key_exists("Authorization", $headers)){
+                                $auth_header = getallheaders()["Authorization"];
+                                $matches = [];
+                                $jwt = preg_match('/(?<=Bearer )[a-zA-Z0-9\.\-_]*/', $auth_header, $matches);
+                                if(count($matches) == 1){
+                                    $jwt =$matches[0];
+                                    if(default_jwt_validator($jwt)){
+                                        $jwt = json_decode(base64url_decode(explode(".",$jwt)[1]));
+                                        if($jwt->eu_viotal_bazar_uid == $sswordsearch->uid){
+                                            remove_record($payload->id);
                                         }else{
-                                            throw new notValidinException("Wrong payload");
+                                            throw new InputException("Not your record.");
                                         }
                                     }else{
-                                        throw new notValidinException("Wrong payload");
+                                        throw new notValidinException("JWT invalid.");
                                     }
+                                }else{
+                                    throw new notValidinException("JWT invalid format.");
                                 }
                             }else{
                                 if(isset($payload->passwd)){

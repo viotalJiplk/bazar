@@ -1,2 +1,4 @@
 /php/secrets.php
 /pictures/
+endpoints/php/priv-key.php
+endpoints/publickey.crt

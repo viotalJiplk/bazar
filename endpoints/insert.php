@@ -2,11 +2,11 @@
     include_once("php/dbio.php");
     include_once("php/classdef.php");
     include_once("php/helper.php");
-    session_start();
+    include_once("php/verifyjwt.php");
 
     header("Content-type: application/json");
     try{
-        
+        $headers = getallheaders();
         $json = file_get_contents('php://input');
         $payload = json_decode($json);
         if($payload == NULL){
@@ -14,16 +14,22 @@
         }else{
             if(isset($payload->cat) & isset($payload->price)){
                 if($payload->cat != NULL  & $payload->price != NULL){
-                    if(isset($payload->loggedin)){
-                        if($payload->loggedin){
-                            if(!array_key_exists("email", $_SESSION)){
-                                throw new notValidinException("not logged in");
+                    if(array_key_exists("Authorization", $headers)){
+                        $auth_header = getallheaders()["Authorization"];
+                        $matches = [];
+                        $jwt = preg_match('/(?<=Bearer )[a-zA-Z0-9\.\-_]*/', $auth_header, $matches);
+                        if(count($matches) == 1){
+                            $jwt =$matches[0];
+                            if(default_jwt_validator($jwt)){
+                                $jwt = json_decode(base64url_decode(explode(".",$jwt)[1]));
+                                $param[":email"] = $jwt->eu_viotal_bazar_email;
+                                $param[":passwd"] = NULL;
+                                $param[":uid"]  =  $jwt->eu_viotal_bazar_uid;
+                            }else{
+                                throw new notValidinException("JWT invalid.");
                             }
-                            $param[":email"] = $_SESSION["email"];
-                            $param[":passwd"] = NULL;
-                            $param[":uid"]  =  $_SESSION["id"];
                         }else{
-                            throw new notValidinException("type of something in payload is incorrect");
+                            throw new notValidinException("JWT invalid format.");
                         }
                     }elseif(isset($payload->email) & isset($payload->passwd)){
                         if($payload->email != NULL & $payload->passwd != NULL){
@@ -31,10 +37,10 @@
                             $param[":passwd"] = password_hash($payload->passwd, PASSWORD_DEFAULT);
                             $param[":uid"] = NULL;
                         }else{
-                            throw new notValidinException("type of something in payload is incorrect");
+                            throw new notValidinException("type of email in payload is incorrect");
                         }
                         if(gettype($param[":passwd"]) != "string"){
-                            throw new notValidinException("type of something in payload is incorrect");
+                            throw new notValidinException("type of password in payload is incorrect");
                         }    
                     }
                     $param[":cat"] = escapehtml(array(), $payload->cat);
@@ -59,12 +65,15 @@
                     }else{
                         $param[":descr"] = NULL;
                     }
-                    if(array_key_exists("up_file", $_SESSION)){
-                        $param[":pic"] = $_SESSION["up_file"];
+                    if(isset($payload->picture)){
+                        if(preg_match('/^img_[a-z0-9]*((\.svg)|(\.jpg)|(\.png)|(\.gif))/',$payload->picture) === 1){
+                            $param[":pic"] = $payload->picture;
+                        }else{
+                            throw new notValidinException("Error in file name.");        
+                        }
                     }else{
                         $param[":pic"] = NULL;
                     }
-
                     dbio($sql, $param);
                 }else{
                     throw new notValidinException("wrong payload");

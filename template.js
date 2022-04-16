@@ -57,7 +57,7 @@ class events{
 eventmanager = new events();
 
 //include all required scripts
-include(["js/ajax.js", "js/init.js"]);
+include(["js/jwthelper.js", "js/ajax.js", "js/init.js"]);
 add_css(["include/nav.css", "include/content.css", "include/footer.css"]);
 
 /**
@@ -155,7 +155,7 @@ function create_csstag(url){
   return link;
 }
 
-//lets install service worker
+// lets install service worker
 if('serviceWorker' in navigator) {
   navigator.serviceWorker
        .register('sw.js')

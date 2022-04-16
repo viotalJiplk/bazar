@@ -46,7 +46,7 @@ function logincallback(resText){
     if(resText != ""){
         res = JSON.parse(resText);
         if(res.estate == 0 & res.result == "ok"){
-            localStorage.setItem("account", JSON.stringify({"email": res.email, "uname":res.uname, "uid":res.uid}));
+            localStorage.setItem("jwt", res.jwt);
             location.href = "index.html";
         }else{
             console.error("unknown error");
