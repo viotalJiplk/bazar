@@ -14,7 +14,7 @@
         }else{
             if(isset($payload->cat) & isset($payload->price)){
                 if($payload->cat != NULL  & $payload->price != NULL){
-                    if(array_key_exists("Authorization", $headers)){
+                    if(array_key_exists("Authorization", $headers) && $headers["Authorization"] != ""){
                         $auth_header = getallheaders()["Authorization"];
                         $matches = [];
                         $jwt = preg_match('/(?<=Bearer )[a-zA-Z0-9\.\-_]*/', $auth_header, $matches);
@@ -42,6 +42,8 @@
                         if(gettype($param[":passwd"]) != "string"){
                             throw new notValidinException("type of password in payload is incorrect");
                         }    
+                    }else{
+                        throw new notValidinException("payload is invalid");
                     }
                     $param[":cat"] = escapehtml(array(), $payload->cat);
                     $param[":price"] = $payload->price;

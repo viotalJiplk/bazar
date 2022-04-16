@@ -25,7 +25,7 @@
                     if(isset($sswordsearch[0])){
                         $sswordsearch = $sswordsearch[0]; 
                         if(property_exists($sswordsearch,"passwd") & property_exists($sswordsearch,"uid")){
-                            if(array_key_exists("Authorization", $headers)){
+                            if(array_key_exists("Authorization", $headers)&& $headers["Authorization"] != ""){
                                 $auth_header = getallheaders()["Authorization"];
                                 $matches = [];
                                 $jwt = preg_match('/(?<=Bearer )[a-zA-Z0-9\.\-_]*/', $auth_header, $matches);
