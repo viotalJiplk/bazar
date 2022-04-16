@@ -1,3 +1,4 @@
+START TRANSACTION;
 SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
@@ -14,8 +15,8 @@ GRANT ALL PRIVILEGES ON bazar.* TO 'bazos'@'localhost';
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uname` tinytext NOT NULL,
-  `email` text NOT NULL,
+  `uname` varchar(512) NOT NULL,
+  `email` varchar(512) NOT NULL,
   `password` text NOT NULL,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `uname` (`uname`) USING HASH,
@@ -41,3 +42,4 @@ CREATE TABLE `zaznamy` (
   KEY `uid` (`uid`),
   CONSTRAINT `zaznamy_ibfk_5` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+COMMIT;
