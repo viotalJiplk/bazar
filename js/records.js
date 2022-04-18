@@ -37,15 +37,11 @@ function add_records(records){
             }else{
                 element.pic = "pictures/" + element.pic;
             }
-            let img = document.createElement("img");
-            img.addEventListener("click",function(e) {
-                console.log(e.target);
-                change_photores(e.target);               
-            });
-
-            img.setAttribute("src", element.pic);
+            
             let p = document.createElement("p");
             let a = document.createElement("a");
+            let name = document.createElement("h4");
+            name.innerText = element.name;
             a.setAttribute("href","mailto://" + element.email);
             a.innerText = element.email;
             let contact = p.cloneNode();
@@ -58,8 +54,33 @@ function add_records(records){
             let price = p.cloneNode();
             price.innerText = "Cena: " + element.price + " Kč";
 
-            record.appendChild(img);
+            record.appendChild(name);
+
+            if(element.pic !== null & element.pic != ""){
+                let img = document.createElement("img");
+                img.addEventListener("click",function(e) {
+                    console.log(e.target);
+                    change_photores(e.target);               
+                });
+
+                img.setAttribute("src", element.pic);
+                record.appendChild(img);
+            }
+
             record.appendChild(contact);
+
+            if(element.phone !== null){
+                let phone = p.cloneNode();
+                phone.innerText = "Tel. číslo: " + element.phone
+                record.appendChild(phone);
+            }
+
+            if(element.loc !== null){
+                let loc = p.cloneNode();
+                loc.innerText = "Lokalita: " + element.loc
+                record.appendChild(loc);
+            }
+
             record.appendChild(descr);
             record.appendChild(price);
 

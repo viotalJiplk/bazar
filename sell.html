@@ -13,13 +13,13 @@
 		<div id="content">
 			<h1>Bazar - prodej</h1>
 				<div id="notlogedin">
-					<label for="name">Jméno:</label>
-					<input type="text" name="name" id="id_name"/>
 					<label for="email">* Email:</label>
 					<input required type="email" name="email" id="id_email"/>
 					<label for="passwd">* Heslo:<br>
 					<input required type="password" name="passwd" id="id_passwd"/>
 				</div>
+				<label for="prod_name">Jméno produktu:</label>
+				<input required type="text" name="prod_name" id="id_name"/>
 				<label for="cat">* Kategorie:<br>
 				<select required name="cat" id="id_cat">
 					<option value="oth">Jiné</option>
@@ -29,7 +29,10 @@
 				</select>
 				<label for="descr">* Popis:</label>
 				<textarea required cols="30" rows="5" name="descr" id="id_descr"></textarea>
-
+				<label for="loc">Lokalita:</label>
+				<input required type="text"  name="loc" id="id_loc"/>
+				<label for="phone">Tel. číslo:</label>
+				<input required type="text"  name="phone" id="id_phone"/>
 				<label for="pic">* Obrázek:</label>
 				<input required size="10" type="file" name="pic" id="id_pic"/><button id="upload_picture_button">nahrát fotku</button>
 				<label for="price">*Cena:</label>

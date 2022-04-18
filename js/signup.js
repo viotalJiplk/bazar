@@ -81,7 +81,7 @@ function signuperrorcallback(status, resText){
         res = JSON.parse(resText);
         if(status == 403 & res.estate == 1){
             if(res.msg == "email or username is alredy in database"){
-                res.msg = "email nebo uživatelské jméno již bylo zaregistrováno";
+                res.msg = "Chyba: Email nebo uživatelské jméno již bylo zaregistrováno.";
             }
             res.msg = "Chyba: " + res.msg
             document.getElementById("loginerror").firstElementChild.innerText = res.msg;

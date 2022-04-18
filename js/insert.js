@@ -46,18 +46,27 @@ function insert(){
         "cat": document.getElementById("id_cat").value,
         "descr": document.getElementById("id_descr").value,
         "price": Number(document.getElementById("id_price").value),
+        "name": document.getElementById("id_name").value
     }
+
+    if(document.getElementById("id_phone").value != ""){
+        json.phone = document.getElementById("id_phone").value;
+    }
+
+    if(document.getElementById("id_loc").value != ""){
+        json.loc = document.getElementById("id_loc").value;
+    }
+
     if(window.jwt != null){
         headers["Authorization"] = "Bearer " + window.encodedjwt;
     }else{
-        json.name = document.getElementById("id_name").value;
         json.email = document.getElementById("id_email").value;
         json.passwd = document.getElementById("id_passwd").value;
     }
     if(window.upload){
         json.picture = window.upload;
     }
-    if(json.cat !== undefined & json.price !== undefined & json.descr != "" & (headers["Authorization"] !== undefined | (json.email != "" & json.passwd != ""))){
+    if(json.name !== undefined, json.cat !== undefined & json.price !== undefined & json.descr != "" & (headers["Authorization"] !== undefined | (json.email != "" & json.passwd != ""))){
         if(json.price != 0){
             json = JSON.stringify(json);
             togle_waiting_sign(1);
@@ -89,7 +98,7 @@ function insert(){
 }
 
 function rm_session(){
-    localStorage.removeItem("account");
+    localStorage.removeItem("jwt");
     location.href = "index.html";
 }
 
@@ -112,17 +121,21 @@ function callback_insert(responseText){
         // const div = create_status_div("error", 1);
         // const log_div = document.getElementById("log");
         // log_div.appendChild(div);
-        alert("chyba");
         if(json.msg == "not logged in"){
+            alert("Chyba: Kontaktujte prosím podporu");
             rm_session();
+        }else if(json.msg == "Invalid email."){
+            alert("Chyba: Špatně zadaný email.");
+        }else{
+            alert("Neznámá chyba kontaktujte prosím podporu");
         }
     }
 }
 
 function error_callback_insert(res){
-    alert("chyba");
     console.error(res);
     togle_waiting_sign(0)
+    alert("Neznámá chyba kontaktujte prosím podporu");
 }
 
 /**

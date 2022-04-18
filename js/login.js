@@ -69,9 +69,9 @@ function loginerrorcallback(status, resText){
         res = JSON.parse(resText);
         if(status == 403 & res.estate == 1){
             if(res.msg == "Wrong email or password."){
-                res.msg = "špatný email nebo uživatelské jméno";
+                res.msg = "Chyba: Špatný email nebo uživatelské jméno.";
             }else if(res.msg == "already logged in"){
-                res.msg = "už jste přihlášený"
+                res.msg = "Chyba: Už jste přihlášený."
             }
             res.msg = "Chyba: " + res.msg
             document.getElementById("loginerror").firstElementChild.innerText = res.msg;

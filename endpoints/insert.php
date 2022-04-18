@@ -12,7 +12,7 @@
         if($payload == NULL){
             throw new notValidinException("no json sent");
         }else{
-            if(isset($payload->cat) & isset($payload->price)& isset($payload->descr)){
+            if(isset($payload->cat) & isset($payload->price)& isset($payload->descr) & isset($payload->name)){
                 if($payload->cat != NULL  & $payload->price !== NULL){
                     if(array_key_exists("Authorization", $headers) && $headers["Authorization"] != ""){
                         $auth_header = getallheaders()["Authorization"];
@@ -52,24 +52,36 @@
                     if((gettype($param[":email"]) != "string") OR (gettype($param[":cat"]) != "string") OR (gettype($param[":price"]) != "integer")){
                         throw new notValidinException("type of something in payload is incorrect");
                     }
-
-                    $sql = "INSERT INTO zaznamy(name, uid, email, passwd, cat, descr, pic, price) VALUES(:name1, :uid, :email, :passwd, :cat, :descr, :pic, :price)";
-                    
-                    if(isset($payload->name)){
-                        $param[":name1"] = escapehtml(array(),  strval($payload->name));
-                    }else{
-                        $param[":name1"] = NULL;
+                    if(!preg_match('/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD', $payload->email)){ //regex from http://emailregex.com/
+                        throw new notValidinException("Invalid email.");
                     }
 
-                    if(isset($payload->descr)){
-                        if($payload->descr != ""){
-                            $param[":descr"] = escapehtml(array(), strval($payload->descr));
-                        }else{
-                            throw new notValidinException("No description provided.");     
-                        }
+                    $sql = "INSERT INTO zaznamy(uid, name, email, passwd, cat, loc, descr, pic, price, phone) VALUES(:uid, :name1, :email, :passwd, :cat, :loc, :descr, :pic, :price, :phone)";
+                    
+                    if($payload->name){
+                        $param[":name1"] = escapehtml(array(),  strval($payload->name));
+                    }else{
+                        throw new notValidinException("No name of product provided."); 
+                    }
+
+                    if(isset($payload->phone)){
+                        $param[":phone"] = escapehtml(array(),  strval($payload->name));
+                    }else{
+                        $param[":phone"] = NULL;
+                    }
+
+                    if(isset($payload->loc)){
+                        $param[":loc"] = escapehtml(array(),  strval($payload->name));
+                    }else{
+                        $param[":loc"] = NULL;
+                    }
+
+                    if($payload->descr != ""){
+                        $param[":descr"] = escapehtml(array(), strval($payload->descr));
                     }else{
                         throw new notValidinException("No description provided.");  
                     }
+
                     if(isset($payload->picture)){
                         if(preg_match('/^img_[a-z0-9]*((\.svg)|(\.jpg)|(\.png)|(\.gif))/',$payload->picture) === 1){
                             $param[":pic"] = $payload->picture;
