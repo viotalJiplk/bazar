@@ -51,7 +51,7 @@ nav > ul > li > a{
     color: black;
 }
 footer{
-    background-color: #A9CDE8;
+    background-color: #c8b7b7;
     min-height: 5rem;
     padding: 1rem;
     color: black;
@@ -67,11 +67,50 @@ footer a{
 }
 footer div{
     top: 50%;
-    transform: translateY(-50%);
     position: relative;
 }
 
 #content{
     margin: 1em;
     grid-area: contentdiv;
+}
+#waiting{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 2vw;
+    background-color: #ffffff;
+    border-radius: 2vw;
+    padding: 5vw;
+    border: solid #423737;
+    visibility: hidden;
+}
+
+#pulsing{
+    height: 30vw;
+    width: 30vw;
+    background-color: red;
+    animation: 
+        pulse 3s ease infinite alternate, 
+        nudge 5s linear infinite alternate;
+    border-radius: 100%;
+    text-align: center;
+}
+@keyframes pulse {
+    0%, 100% {
+        background-color: red;
+    }
+    50% {
+        background-color: rgb(192, 52, 52);
+    }
+}
+
+#pulsing > p{
+    position: relative;
+    top: 50%;
+    font-size: 5vw;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: #ffffff;
 }

@@ -91,14 +91,19 @@ function rmbuttonf(id){
         if(recuid != window.account.uid){
             payload.passwd = prompt("Zadejte heslo.");
             if(payload.passwd != null){
+                togle_waiting_sign(1);
                 ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
             }
         }else{
-            ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback , [["Authorization", "Bearer " + window.encodedjwt]]);
+            togle_waiting_sign(1);
+            array = new Array();
+            array["Authorization"] = "Bearer " + window.encodedjwt;
+            ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback , array);
         }
     }else{
         payload.passwd = prompt("Zadejte heslo.");
         if(payload.passwd != null){
+            togle_waiting_sign(1);
             ajax(window.api.endpoints.remove, "POST", rmbuttoncallback, JSON.stringify(payload), rmbuttonerrorcallback);
         }
     }
@@ -109,6 +114,7 @@ function rmbuttonf(id){
  * @param {string} resText body of http response
  */
 function rmbuttoncallback(resText){
+    togle_waiting_sign(0);
     if(resText != ""){
         let res = JSON.parse(resText);
         if(res.estate == 0 & res.result == "ok"){
@@ -129,6 +135,7 @@ function rmbuttoncallback(resText){
  * @param {string} resText text, with which server responded 
  */
 function rmbuttonerrorcallback(status, resText){
+    togle_waiting_sign(0);
     if(resText != ""){
         res = JSON.parse(resText);
         if(status == 403 & res.estate == 1){

@@ -12,33 +12,37 @@
 		<script src="js/ajax.js"></script>
 	</head>
 	<body>
-		<div class="wrapper">
-			<div class="search">
-				<div class="searchbox">
-					<label for="cat">Kategorie:</label>
-					<select required name="cat" id="id_cat"/>
-						<option value="">Vše</option>
-						<option value="tech">Technika</option>
-						<option value="toy">Hračky</option>
-						<option value="art">Umění</option>
-						<option value="oth">Jiné</option>
-					</select>
+		<div id="content">
+			<h1>Bazar - nabídky</h1>
+			<div class="wrapper">
+				<div class="search">
+					<div class="searchbox">
+						<div class="cat">
+							<label for="cat">Kategorie:</label>
+							<select required name="cat" id="id_cat"/>
+								<option value="">Vše</option>
+								<option value="tech">Technika</option>
+								<option value="toy">Hračky</option>
+								<option value="art">Umění</option>
+								<option value="oth">Jiné</option>
+							</select>
+						</div>
+						<label for="price_from">Cena od:</label>
+						<input type="number" min="0" max="4294967295" name="price_from" id="id_price_from"/>Kč
+						<label for="price_to">Cena do:</label>
+						<input type="number" min="0" max="4294967295" name="price_to" id="id_price_to"/>Kč
+						<label for="pub_date">Max. stáří:</label>
+						<input type="date" min="0" name="pub_date" id="id_pub_date"/> dní
+						<label for="limit">počet výsledků na stránku:</label>
+						<input type="number" min="1", max="100" name="limit" id="limit" value="50"/>
+						<br><button id="submitbutton">vyfiltruj</button>
+					</div>
 				</div>
-				<label for="price_from">Cena od:</label>
-				<input type="number" min="0" max="4294967295" name="price_from" id="id_price_from"/>Kč
-				<label for="price_to">Cena do:</label>
-				<input type="number" min="0" max="4294967295" name="price_to" id="id_price_to"/>Kč
-				<label for="pub_date">Max. stáří:</label>
-				<input type="date" min="0" name="pub_date" id="id_pub_date"/> dní
-				<label for="limit">počet výsledků na stránku:</label>
-				<input type="number" min="1", max="100" name="limit" id="limit" value="50"/>
-				<br><button id="submitbutton">vyfiltruj</button>
-			</div>
-			<div class="results" id="results">
-				<h1>Bazar - hledej</h1>
-				<div id="records"></div>
-				<div id="page_navigation"></div>
-				<div id="bg"><p>klikni na obrázek pro zavření</p></div>
+				<div class="results" id="results">
+					<div id="records"></div>
+					<div id="page_navigation"></div>
+					<div id="bg"><p>klikni na obrázek pro zavření</p></div>
+				</div>
 			</div>
 		</div>
 	</body>

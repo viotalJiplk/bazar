@@ -35,6 +35,22 @@ function on_ajaxload(){
     }
 }
 
+eventmanager.addEventListener("fooloaded", function(){
+    document.getElementById("waiting").addEventListener("click", function(){togle_waiting_sign(0)});
+});
+/**
+ * function to togle waiting sign
+ * @param {Boolean} state 0 off 1 on
+ */
+function togle_waiting_sign(state = false){
+    let elem = document.getElementById("waiting");
+    if(state){
+        elem.style.visibility = "visible";
+    }else{
+        elem.style.visibility = "hidden";
+    }
+}
+
 /**
  * if user is logged in changes "přihlášení" to "účet" and populates window.account
 */

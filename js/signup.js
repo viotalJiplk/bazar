@@ -45,6 +45,7 @@ function signup(){
             "password": password,
             "username": username
         };
+        togle_waiting_sign(1);
         ajax(window.api.endpoints.signup, "POST", signupcallback, JSON.stringify(payload), signuperrorcallback);   
     }
 }
@@ -54,6 +55,7 @@ function signup(){
  * @param {String} responseText body of http response
  */
 function signupcallback(resText){
+    togle_waiting_sign(0);
     if(resText != ""){
         res = JSON.parse(resText);
         if(res.estate == 0 & res.result == "ok"){
@@ -74,6 +76,7 @@ function signupcallback(resText){
  * @param {string} resText text, with which server responded 
  */
 function signuperrorcallback(status, resText){
+    togle_waiting_sign(0);
     if(resText != ""){
         res = JSON.parse(resText);
         if(status == 403 & res.estate == 1){

@@ -43,6 +43,7 @@ function getlogincredentials(){
  * @param {string} resText text, with which server responded 
  */
 function logincallback(resText){
+    togle_waiting_sign(0);
     if(resText != ""){
         res = JSON.parse(resText);
         if(res.estate == 0 & res.result == "ok"){
@@ -63,6 +64,7 @@ function logincallback(resText){
  * @param {string} resText text, with which server responded 
  */
 function loginerrorcallback(status, resText){
+    togle_waiting_sign(0);
     if(resText != ""){
         res = JSON.parse(resText);
         if(status == 403 & res.estate == 1){
@@ -97,6 +99,7 @@ function login(email, password, callback, callbackerror){
             "email":email,
             "password":password
         }
+        togle_waiting_sign(1);
         ajax(window.api.endpoints.login, "POST", callback, JSON.stringify(payload), callbackerror)    
     }
 }

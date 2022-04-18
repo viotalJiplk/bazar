@@ -1,24 +1,29 @@
-.search > label{
+.searchbox > label{
     margin: 0px;
     display: block;
+}
+.searchbox{
+    position: fixed;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    background-color: #998787;
+    padding: 1rem;
 }
 h1{
     text-align: center;
 }
 .search{
-    grid-area: menu;
-    background-color: #8DE2EF;
-    padding: 1rem;
+    flex-grow: 0;
+    min-width: 18rem;
 }
 .results{
-    grid-area: results;
+    flex-grow: 1;
     padding: 1rem;
 }
 
 .wrapper{
-    display: grid;
-    grid-template-areas:
-    'menu results results results'
+    display: flex;
+    flex-wrap: nowrap;
 }
 img{
     height: 9ch;

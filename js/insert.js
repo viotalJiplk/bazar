@@ -60,11 +60,13 @@ function insert(){
     if(json.cat !== undefined & json.price !== undefined & json.descr != "" & (headers["Authorization"] !== undefined | (json.email != "" & json.passwd != ""))){
         if(json.price != 0){
             json = JSON.stringify(json);
-            ajax(window.api.endpoints.insert, "POST", callback_insert, json, alert, headers);
+            togle_waiting_sign(1);
+            ajax(window.api.endpoints.insert, "POST", callback_insert, json, error_callback_insert, headers);
         }else{
             if(confirm("Opravdu chcete zadat nabídku s cenou 0 Kč?")){
                 json = JSON.stringify(json);
-                ajax(window.api.endpoints.insert, "POST", callback_insert, json, alert, headers);
+                togle_waiting_sign(1);
+                ajax(window.api.endpoints.insert, "POST", callback_insert, json, error_callback_insert, headers);
             }
         }
     }else{
@@ -96,6 +98,7 @@ function rm_session(){
  * @param {String} responseText body of http response
  */
 function callback_insert(responseText){
+    togle_waiting_sign(0);
     let json = JSON.parse(responseText);
     if(json.status == "ok"){
         // const div = create_status_div("nahráno", 0);
@@ -114,6 +117,12 @@ function callback_insert(responseText){
             rm_session();
         }
     }
+}
+
+function error_callback_insert(res){
+    alert("chyba");
+    console.error(res);
+    togle_waiting_sign(0)
 }
 
 /**

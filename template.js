@@ -31,7 +31,8 @@ class events{
   event = {
     "ajaxloaded": new Event('ajaxloaded'),
     "settingsloaded": new Event('settingsloaded'),
-    "navloaded": new Event('navloaded')
+    "navloaded": new Event('navloaded'),
+    "fooloaded": new Event('fooloaded')
   };
   constructor(){
     for(let element in this.event){
@@ -130,6 +131,7 @@ function build_foo(){
       const foo = document.createElement("footer");
       foo.innerHTML = res;
       document.body.appendChild(foo);
+      window.dispatchEvent(eventmanager.event.fooloaded);
     },
     "");
 }

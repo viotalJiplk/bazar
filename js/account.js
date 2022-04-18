@@ -69,5 +69,7 @@ function logouterrorcallback(status, resText){
  * function to try loging out
  */
 function logout(){
-    ajax(window.api.endpoints.logout, "POST", logoutcallback, "", logouterrorcallback);    
+    localStorage.removeItem("jwt");
+    location.href = "index.html";
+    //ajax(window.api.endpoints.logout, "POST", logoutcallback, "", logouterrorcallback);    
 }
