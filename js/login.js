@@ -91,7 +91,7 @@ function loginerrorcallback(status, resText){
  */
 function login(email, password, callback, callbackerror){
     if(email == "" | password == ""){
-        window.dispatchEvent(loginfailed)
+        loginerrorcallback(403,"{\"estate\":1, \"msg\":\"Chybí email nebo heslo.\"}");
     }else{
         payload = {
             "email":email,

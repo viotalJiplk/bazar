@@ -57,7 +57,7 @@ eventmanager = new events();
 
 //include all required scripts
 include(["js/jwthelper.js", "js/ajax.js", "js/init.js"]);
-add_css(["include/nav.css", "include/content.css", "include/footer.css"]);
+add_css(["include/template.css"]);
 
 /**
  * function to create script element
@@ -99,6 +99,8 @@ function set_active(nav){
   let page = path.split("/").pop();
   if(page == ""){
     page = "index.html";
+  }else if(page == "account.html"){
+    page = "login.html";
   }
   let active = nav.querySelector('[href="' + page + '"]');
   if(active != null){
@@ -155,8 +157,8 @@ function create_csstag(url){
 }
 
 // lets install service worker
-if('serviceWorker' in navigator) {
-  navigator.serviceWorker
-       .register('sw.js')
-       .then(function() { console.log('Service Worker Registered'); });
-}
+// if('serviceWorker' in navigator) {
+//   navigator.serviceWorker
+//        .register('sw.js')
+//        .then(function() { console.log('Service Worker Registered'); });
+// }

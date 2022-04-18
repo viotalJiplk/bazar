@@ -7,18 +7,18 @@ h1{
 }
 .search{
     grid-area: menu;
-    background-color: rgb(77, 188, 252);
+    background-color: #8DE2EF;
     padding: 1rem;
 }
-.content{
-    grid-area: content;
+.results{
+    grid-area: results;
     padding: 1rem;
 }
 
 .wrapper{
     display: grid;
     grid-template-areas:
-    'menu content content content'
+    'menu results results results'
 }
 img{
     height: 9ch;

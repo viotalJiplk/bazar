@@ -52,8 +52,8 @@ function ajax(url, method, callback, payload = "", errorcallback = console.error
         }
     }
     xhttp.open(method, url , true);
-    for(i = 0; i < headers.length; i++){
-        xhttp.setRequestHeader(headers[i][0], headers[i][1]);
+    for(header in headers){
+        xhttp.setRequestHeader(header, headers[header]);
     }
     xhttp.send(payload);
 }

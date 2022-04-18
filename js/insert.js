@@ -48,8 +48,7 @@ function insert(){
         "price": Number(document.getElementById("id_price").value),
     }
     if(window.jwt != null){
-        json.loggedin = true;
-        headers.push(["Authorization", "Bearer " + window.encodedjwt]);
+        headers["Authorization"] = "Bearer " + window.encodedjwt;
     }else{
         json.name = document.getElementById("id_name").value;
         json.email = document.getElementById("id_email").value;
@@ -58,8 +57,33 @@ function insert(){
     if(window.upload){
         json.picture = window.upload;
     }
-    json = JSON.stringify(json);
-    ajax(window.api.endpoints.insert, "POST", callback_insert, json, alert, headers);
+    if(json.cat !== undefined & json.price !== undefined & json.descr != "" & (headers["Authorization"] !== undefined | (json.email != "" & json.passwd != ""))){
+        if(json.price != 0){
+            json = JSON.stringify(json);
+            ajax(window.api.endpoints.insert, "POST", callback_insert, json, alert, headers);
+        }else{
+            if(confirm("Opravdu chcete zadat nabídku s cenou 0 Kč?")){
+                json = JSON.stringify(json);
+                ajax(window.api.endpoints.insert, "POST", callback_insert, json, alert, headers);
+            }
+        }
+    }else{
+        if(json.cat === undefined){
+            alert("Chyba: Není zadána kategorie.");
+        }else if(json.price === undefined){
+            alert("Chyba: Není zadána cena.");
+        }else if(json.descr == ""){
+            alert("Chyba: Není zadán popis.");
+        }else if(headers["Authorization"] === undefined & json.passwd == ""){
+            alert("Chyba: Není zadáno heslo.");
+        }else if(headers["Authorization"] === undefined & json.email == ""){
+            alert("Chyba: Není zadán email.");
+        }else if(headers["Authorization"] !== undefined){
+            alert("Chyba: Zkuste se odhlásit a přihlásit. Kontaktujte podporu.");
+        }else{
+            alert("Neznámá chyba: Kontaktujte podporu.");
+        }
+    }
 }
 
 function rm_session(){

@@ -12,8 +12,8 @@
         if($payload == NULL){
             throw new notValidinException("no json sent");
         }else{
-            if(isset($payload->cat) & isset($payload->price)){
-                if($payload->cat != NULL  & $payload->price != NULL){
+            if(isset($payload->cat) & isset($payload->price)& isset($payload->descr)){
+                if($payload->cat != NULL  & $payload->price !== NULL){
                     if(array_key_exists("Authorization", $headers) && $headers["Authorization"] != ""){
                         $auth_header = getallheaders()["Authorization"];
                         $matches = [];
@@ -53,7 +53,6 @@
                         throw new notValidinException("type of something in payload is incorrect");
                     }
 
-
                     $sql = "INSERT INTO zaznamy(name, uid, email, passwd, cat, descr, pic, price) VALUES(:name1, :uid, :email, :passwd, :cat, :descr, :pic, :price)";
                     
                     if(isset($payload->name)){
@@ -63,9 +62,13 @@
                     }
 
                     if(isset($payload->descr)){
-                        $param[":descr"] = escapehtml(array(), strval($payload->descr));
+                        if($payload->descr != ""){
+                            $param[":descr"] = escapehtml(array(), strval($payload->descr));
+                        }else{
+                            throw new notValidinException("No description provided.");     
+                        }
                     }else{
-                        $param[":descr"] = NULL;
+                        throw new notValidinException("No description provided.");  
                     }
                     if(isset($payload->picture)){
                         if(preg_match('/^img_[a-z0-9]*((\.svg)|(\.jpg)|(\.png)|(\.gif))/',$payload->picture) === 1){
