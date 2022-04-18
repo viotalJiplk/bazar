@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 for the JavaScript code in this page.
 */
 
-// v 5.1
+// v 5.2
 /**
  * this function remove things to cache
  * @param {Cache} cache 
